@@ -14,4 +14,24 @@ describe('Customer', () => {
     it('should be a function', () => {
         expect(Customer).to.be.a('function');
     });
+
+    it('should be an instance of Customer', () => {
+        expect(customer1).to.be.an.instanceOf(Customer);
+    });
+
+    it('should have a unique ID', () => {
+        expect(customer1.id).to.equal(1);
+        expect(customer2.id).to.equal(2);
+
+        expect(customer1.id).to.equal(customerData[0].id);
+        expect(customer2.id).to.equal(customerData[1].id);
+    });
+
+    it('should have a unique name', () => {
+        expect(customer1.name).to.equal('Leatha Ullrich');
+        expect(customer2.name).to.equal('Rocio Schuster');
+
+        expect(customer1.name).to.equal(customerData[0].name);
+        expect(customer2.name).to.equal(customerData[1].name);
+    });
 });
