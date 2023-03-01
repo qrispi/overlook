@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import {expect} from 'chai';
 import Room from '../src/classes/Room';
 import testData from "./test-data";
 

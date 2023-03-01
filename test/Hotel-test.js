@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+import {expect} from 'chai';
 import Room from '../src/classes/Room';
 import Hotel from '../src/classes/Hotel';
 import testData from "./test-data";
