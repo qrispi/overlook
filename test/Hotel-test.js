@@ -15,4 +15,14 @@ describe('Hotel', () => {
     it('should be a function', () => {
         expect(Hotel).to.be.a('function');
     });
+
+    it('should be an instance of Hotel', () => {
+        expect(hotel).to.be.an.instanceOf(Hotel);
+    });
+
+    it('should store an array of rooms', () => {
+        expect(hotel.rooms).to.be.a('array');
+        expect(hotel.rooms.length).to.equal(5);
+        expect(hotel.rooms[1]).to.be.an.instanceOf(Room);
+    });
 });
