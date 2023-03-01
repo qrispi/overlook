@@ -1,6 +1,8 @@
+import Room from "./Room.js";
+
 class Hotel {
-    constructor() {
-        this.rooms;
+    constructor(roomsData) {
+        this.rooms = roomsData.map(roomData => new Room(roomData));
     };
 };
 
