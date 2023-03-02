@@ -42,6 +42,7 @@ function displayUserReservations() {
             <h5>Stayed in ${booking.date}</h5>
         </article>`
     });
+    document.getElementById('userName').innerText = user.name;
     document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent(hotel.rooms);
 }
 
