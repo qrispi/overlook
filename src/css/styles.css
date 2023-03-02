@@ -10,11 +10,17 @@ nav {
   list-style: none;
   background-color: grey;
   font-size: 2rem;
+  height: 6vh;
 }
 
 .welcome-header {
   text-align: center;
   font-size: 1.5rem;
+}
+
+.user-future-bookings {
+  display: flex;
+  overflow: auto;
 }
 
 .booking-image {
@@ -23,9 +29,18 @@ nav {
 
 .future-booking {
   width: 32vw;
+  margin: 3vw;
   background-color: aquamarine;
 }
 
+.user-past-bookings {
+  display: flex;
+  overflow: auto;
+}
+
 .past-booking {
+  text-align: center;
+  margin: 2vw;
   background-color: bisque;
+  width: 15vw;
 }
