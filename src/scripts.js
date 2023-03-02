@@ -1,11 +1,25 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/styles.css';
+import getAllPromises from './api-calls';
+import Hotel from './classes/Hotel';
+import Customer from './classes/Customer';
+import './images/turing-logo.png';
 
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
+let user;
+let hotel;
 
+getData();
 
-console.log('This is the JavaScript entry file - your code begins here.');
+function getData() {
+    let loginID = 34;
+    getAllPromises(loginID).then(data => {
+        hotel = new Hotel(data[0].rooms, data[1].bookings);
+        user = new Customer(data[2]);
+    })
+    .then(logData);
+}
+
+// PURELY FOR TESTING
+function logData() {
+    console.log("user: ", user);
+    console.log("hotel: ", hotel);
+}
