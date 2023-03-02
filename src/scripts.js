@@ -6,15 +6,13 @@ import './images/turing-logo.png';
 
 let user;
 let hotel;
-let bookings;
 
 getData();
 
 function getData() {
     let loginID = 34;
     getAllPromises(loginID).then(data => {
-        hotel = new Hotel(data[0].rooms);
-        bookings = data[1].bookings;
+        hotel = new Hotel(data[0].rooms, data[1].bookings);
         user = new Customer(data[2]);
     })
     .then(logData);
@@ -24,5 +22,4 @@ function getData() {
 function logData() {
     console.log("user: ", user);
     console.log("hotel: ", hotel);
-    console.log("bookings: ", bookings);
 }
