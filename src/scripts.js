@@ -7,6 +7,7 @@ import './images/hotel-room.png';
 
 let user;
 let hotel;
+const today = new Date();
 
 getData();
 
@@ -21,6 +22,8 @@ function getData() {
 
 // PURELY FOR TESTING
 function logData() {
-    console.log("user: ", user);
+    console.log('Today: ', today);
     console.log("hotel: ", hotel);
+    user.getMyBookings(hotel.bookings, today);
+    console.log("user: ", user);
 }
