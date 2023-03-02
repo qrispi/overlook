@@ -24,6 +24,7 @@ function getData() {
 function logData() {
     console.log('Today: ', today);
     console.log("hotel: ", hotel);
-    user.getMyBookings(hotel.bookings, today);
+    user.sortMyBookings(hotel.bookings, today);
+    console.log("money spent: ", user.calculateMoneySpent(hotel.rooms));
     console.log("user: ", user);
 }
