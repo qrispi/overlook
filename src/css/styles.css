@@ -1,3 +1,31 @@
 body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  background-color: grey;
+  font-size: 2rem;
+}
+
+.welcome-header {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+.booking-image {
+  width: 30vw;
+}
+
+.future-booking {
+  width: 32vw;
+  background-color: aquamarine;
+}
+
+.past-booking {
+  background-color: bisque;
 }

@@ -3,6 +3,7 @@ import getAllPromises from './api-calls';
 import Hotel from './classes/Hotel';
 import Customer from './classes/Customer';
 import './images/turing-logo.png';
+import './images/hotel-room.png';
 
 let user;
 let hotel;
