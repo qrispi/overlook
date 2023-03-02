@@ -1,11 +1,17 @@
 function fetchData(path, method, body) {
     return fetch(`http://localhost:3001/api/v1/${path}`, {
-        Method: method,
-        Body: body,
-        Headers: {"Content-Type": "application/json"}
+        method: method,
+        body: JSON.stringify(body),
+        headers: {"Content-Type": "application/json"}
     })
-    .then(response => response.json())
-    .catch(error => console.log("Caught Error: ", error));
+    .then(response => {
+        if(!response.ok) {
+            throw new Error(response.status);
+        } else {
+            return response.json();
+        }
+    })
+    .catch(error => console.log(`Fetch was unsuccessful for *${path}* due to ${error}!`));
 }
 
 function getAllData(customerID) {
