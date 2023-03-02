@@ -14,9 +14,9 @@ function fetchData(path, method, body) {
     .catch(error => console.log(`Fetch was unsuccessful for *${path}* due to ${error}!`));
 }
 
-function getAllData(customerID) {
+function getAllPromises(customerID) {
     const customerPath = 'customers/' + customerID;
     return Promise.all([fetchData('rooms', 'GET'), fetchData('bookings', 'GET'), fetchData(customerPath, 'GET')]);
 }
 
-export default getAllData;
+export default getAllPromises;

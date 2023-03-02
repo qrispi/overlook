@@ -1,12 +1,28 @@
 import './css/styles.css';
-import getAllData from './api-calls';
+import getAllPromises from './api-calls';
+import Hotel from './classes/Hotel';
+import Customer from './classes/Customer';
 import './images/turing-logo.png';
 
+let user;
+let hotel;
+let bookings;
 
+getData();
 
-function logData() {
-    let currentUser = 34
-    getAllData(currentUser).then(data => console.log(data));
+function getData() {
+    let loginID = 34;
+    getAllPromises(loginID).then(data => {
+        hotel = new Hotel(data[0].rooms);
+        bookings = data[1].bookings;
+        user = new Customer(data[2]);
+    })
+    .then(logData);
 }
 
-logData();
+// PURELY FOR TESTING
+function logData() {
+    console.log("user: ", user);
+    console.log("hotel: ", hotel);
+    console.log("bookings: ", bookings);
+}
