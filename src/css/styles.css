@@ -47,9 +47,27 @@ nav {
 
 .available-rooms {
   display: flex;
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 3vw;
+  width: 9vw;
+  height: 50vh;
+  position: fixed;
+  background-color: antiquewhite;
+}
+
+.filtered-rooms {
+  display: flex;
+  width: 85vw;
   flex-wrap: wrap;
   justify-content: center;
+  margin-left: 15vw;
 }
+
 
 .modal-bg {
   display: flex;
