@@ -12,9 +12,11 @@ let today;
 const selectedDate = document.getElementById('dateInput');
 const searchRooms = document.getElementById('searchRoomsButton');
 const filter = document.getElementById('filterButton');
+const clearFilters = document.getElementById('clearButton');
 
 // searchRooms.addEventListener('click', displayRooms)
 filter.addEventListener('click', filterRooms);
+clearFilters.addEventListener('click', clearRoomOptions);
 
 getData();
 
@@ -72,6 +74,14 @@ function filterRooms() {
     values.forEach(value => {if(value) filters.push(value)});
     // This will call the filter method with the tags array
     if(filters.length > 0) console.log(filters);
+}
+
+function clearRoomOptions() {
+    // Refactor these to be global since function above uses too?
+    document.getElementById('bedNum').value = '';
+    document.getElementById('bedSize').value = '';
+    document.getElementById('roomType').value = '';
+    document.getElementById('bidet').value = '';
 }
 
 // PURELY FOR TESTING
