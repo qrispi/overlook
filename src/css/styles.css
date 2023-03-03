@@ -44,3 +44,13 @@ nav {
   background-color: bisque;
   width: 15vw;
 }
+
+.available-rooms {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}
