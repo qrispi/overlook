@@ -2,20 +2,25 @@ import './css/styles.css';
 import getAllPromises from './api-calls';
 import Hotel from './classes/Hotel';
 import Customer from './classes/Customer';
-import './images/turing-logo.png';
+// import './images/turing-logo.png';
 import './images/hotel-room.png';
 
 let user;
 let hotel;
 let today;
 
-const searchRooms = document.getElementById('searchRoomsButton');
-const filter = document.getElementById('filterButton');
-const clearFilters = document.getElementById('clearButton');
+const searchRoomsButton = document.getElementById('searchRoomsButton');
+const filterButton = document.getElementById('filterButton');
+const clearFiltersButton = document.getElementById('clearButton');
+const myReservationsButton = document.getElementById('myReservationsNav');
 
-searchRooms.addEventListener('click', displayRooms);
-filter.addEventListener('click', filterRooms);
-clearFilters.addEventListener('click', clearRoomOptions);
+const userReservations = document.getElementById('myReservations');
+const availableRooms = document.getElementById('availableRooms');
+
+searchRoomsButton.addEventListener('click', displayRooms);
+filterButton.addEventListener('click', filterRooms);
+clearFiltersButton.addEventListener('click', clearRoomOptions);
+myReservationsButton.addEventListener('click', displayUserReservations);
 
 getData();
 
@@ -34,6 +39,9 @@ function getData() {
 function displayUserReservations() {
     const futureSection = document.getElementById('userFutureBookings');
     const pastSection = document.getElementById('userPastBookings');
+    toggleHidden(availableRooms);
+    toggleHidden(userReservations);
+    user.sortMyBookings(hotel.bookings, today);
     futureSection.innerHTML = '';
     pastSection.innerHTML = '';
     if(user.futureBookings.length > 0) {
@@ -66,6 +74,8 @@ function displayUserReservations() {
 function displayRooms() {
     const selectedDate = document.getElementById('dateInput').value;
     if(selectedDate) {
+        toggleHidden(availableRooms);
+        toggleHidden(userReservations);
         const date = selectedDate.replaceAll('-', '/');
         // This will get sent to method which will return an array of rooms that match
         console.log(date);
@@ -99,11 +109,12 @@ function clearRoomOptions() {
     document.getElementById('bidet').value = '';
 }
 
+function toggleHidden(element) {
+    element.classList.toggle('hidden');
+}
+
 // PURELY FOR TESTING
 function logData() {
-    user.sortMyBookings(hotel.bookings, today);
-
-
     console.log('Today: ', today);
     console.log("hotel: ", hotel);
     console.log("user: ", user);

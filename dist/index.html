@@ -15,7 +15,7 @@
       <button id="searchRoomsButton">Search Rooms</button>
     </label>
     <!-- <li>Welcome, #USER</li> -->
-    <li id="myReservations">My Reservations</li>
+    <li id="myReservationsNav">My Reservations</li>
     <li>LogOut ???</li>
   </nav>
   <main>
@@ -34,7 +34,7 @@
       <h2><i>Maybe you don't have much time, maybe we're just boring... But you can only book for one night.</i></h2>
       <h3>Welcome, <span id="userName"></span></h3>
     </header>
-    <section class="my-bookings hidden">
+    <section class="my-reservations hidden" id="myReservations">
       <h4>Your Upcoming Reservations</h4>
       <section class="user-future-bookings" id="userFutureBookings">
         <!-- Future user reservations will populate here -->
@@ -45,7 +45,7 @@
       </section>
       <h4>Total Spent $<span id="userAmountSpent"></span></h4>
     </section>
-    <section class="available-rooms">
+    <section class="available-rooms" id="availableRooms">
       <aside class="search-rooms">
         <h4>Narrow Down Your Search!</h4>
         <label for="bedNum">Number of Beds:</label>
