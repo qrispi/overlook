@@ -8,18 +8,33 @@
 </head>
 <body>
   <nav>
-    <li>Home ???</li>
-    <li>Book</li>
+    <li>LOGO ???</li>
+    <label>
+      Choose a night:
+      <input type="date" name="book-reservation" min="2023-03-03" max="2025-03-03" id="dateInput"/>
+      <button id="bookButton">See Rooms</button>
+    </label>
     <!-- <li>Welcome, #USER</li> -->
-    <li>My Reservations</li>
+    <li id="myReservations">My Reservations</li>
+    <li>LogOut ???</li>
   </nav>
   <main>
+    <section class="modal-bg hidden" id="modalBg">
+      <article class="clicked-room">
+        <img src="./images/hotel-room.png" alt="picture of booked room" class="modal-image">
+        <h5><i>Junior Suite</i></h5>
+        <h5>2 Twin Beds</h5>
+        <h5>Features a Bidet!</h5>
+        <button>Book now for $$$$$</button>
+      </article>
+      <!-- Clicked Room will populate here -->
+    </section>
     <header class="welcome-header">
       <h1>One Night</h1>
       <h2><i>Maybe you don't have much time, maybe we're just boring... But you can only book for one night.</i></h2>
       <h3>Welcome, <span id="userName"></span></h3>
     </header>
-    <section class="my-bookings">
+    <section class="my-bookings hidden">
       <h4>Your Upcoming Reservations</h4>
       <section class="user-future-bookings" id="userFutureBookings">
         <!-- Future user reservations will populate here -->
@@ -31,7 +46,43 @@
       <h4>Total Spent $<span id="userAmountSpent"></span></h4>
     </section>
     <section class="available-rooms">
-      <!-- Rooms that can be booked will go here once user selects a date -->
+      <aside class="search-rooms">
+        <h4>Narrow Down Your Search!</h4>
+        <label for="bedNum">Number of Beds:</label>
+        <select id="bedNum">
+          <option id="filterPlaceholder" value="" disabled selected>Choose..</option>
+          <option>1</option>
+          <option>2</option>
+        </select>
+        <label for="bedSize">Bed Size:</label>
+        <select id="bedSize">
+          <option id="filterPlaceholder" value="" disabled selected>Choose..</option>
+          <option>King</option>
+          <option>Queen</option>
+          <option>Full</option>
+          <option>Twin</option>
+        </select>
+        <label for="roomType">Room Type:</label>
+        <select id="roomType">
+          <option id="filterPlaceholder" value="" disabled selected>Choose..</option>
+          <option>Residential Suite</option>
+          <option>Suite</option>
+          <option>Junior Suite</option>
+          <option>Single Room</option>
+        </select>
+        <label for="bidet">Bidet?:</label>
+        <select id="bidet">
+          <option id="filterPlaceholder" value="" disabled selected>Choose..</option>
+          <option>Has Bidet</option>
+          <option>No Bidet 😢</option>
+        </select>
+        <button id="filterButton">Filter Rooms</button>
+        <button id="clearButton">Clear Filters</button>
+      </aside>
+      <section class="filtered-rooms">
+        <!-- Rooms that can be booked will go here once user selects a date -->
+        <h4>Oh No! We don't have any rooms available that match that date and filter! Try a different search!</h4>
+      </section>
     </section>
   </main>
   <script src="bundle.js"></script>
