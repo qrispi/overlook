@@ -24,7 +24,7 @@ class Customer {
             });
             return acc;
         }, 0);
-        return Math.round(moneySpent)
+        return Math.round(moneySpent);
     }
 }
 

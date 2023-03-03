@@ -7,13 +7,15 @@ import './images/hotel-room.png';
 
 let user;
 let hotel;
-const today = new Date();
+let today;
 
 
 getData();
 
 function getData() {
-    let loginID = 34;
+    today = new Date();
+    today.setHours(0,0,0,0);
+    let loginID = 5;
     getAllPromises(loginID).then(data => {
         hotel = new Hotel(data[0].rooms, data[1].bookings);
         user = new Customer(data[2]);
@@ -37,7 +39,7 @@ function displayUserReservations() {
             </article>`
         });
     } else {
-        futureSection.innerHTML = '<h4>No Upcoming Reservations! Book one now with the Book button!</h4>'
+        futureSection.innerHTML = '<h4>No Upcoming Reservations! Book one now with the Book button!</h4>';
     }
     if(user.pastBookings.length > 0) {
         user.pastBookings.forEach(booking => {
@@ -48,7 +50,7 @@ function displayUserReservations() {
             </article>`
         });
     } else {
-        pastSection.innerHTML = "<h4>Looks like you haven't stayed with us before! Change that by using the book button!</h4>"
+        pastSection.innerHTML = "<h4>Looks like you haven't stayed with us before! Change that by using the book button!</h4>";
     }
     document.getElementById('userName').innerText = user.name;
     document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent(hotel.rooms);
@@ -56,9 +58,10 @@ function displayUserReservations() {
 
 // PURELY FOR TESTING
 function logData() {
+    user.sortMyBookings(hotel.bookings, today);
+
+
     console.log('Today: ', today);
     console.log("hotel: ", hotel);
-    user.sortMyBookings(hotel.bookings, today);
-    console.log("money spent: ", user.calculateMoneySpent(hotel.rooms));
     console.log("user: ", user);
 }
