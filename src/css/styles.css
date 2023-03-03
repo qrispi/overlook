@@ -51,6 +51,31 @@ nav {
   justify-content: center;
 }
 
+.modal-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  background-color: rgba(0 0 0 / 80%);
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  position: fixed;
+  /* overflow: hidden; */
+}
+
+.clicked-room {
+  z-index: 3;
+  height: 80vh;
+  overflow: auto;
+  background-color: aquamarine;
+}
+
+.modal-image {
+  width: 60vw;
+}
+
 .hidden {
   display: none;
 }
