@@ -9,12 +9,11 @@ let user;
 let hotel;
 let today;
 
-const selectedDate = document.getElementById('dateInput');
 const searchRooms = document.getElementById('searchRoomsButton');
 const filter = document.getElementById('filterButton');
 const clearFilters = document.getElementById('clearButton');
 
-// searchRooms.addEventListener('click', displayRooms)
+searchRooms.addEventListener('click', displayRooms);
 filter.addEventListener('click', filterRooms);
 clearFilters.addEventListener('click', clearRoomOptions);
 
@@ -62,6 +61,22 @@ function displayUserReservations() {
     }
     document.getElementById('userName').innerText = user.name;
     document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent(hotel.rooms);
+}
+
+function displayRooms() {
+    const selectedDate = document.getElementById('dateInput').value;
+    if(selectedDate) {
+        const date = selectedDate.replaceAll('-', '/');
+        // This will get sent to method which will return an array of rooms that match
+        console.log(date);
+    }
+    
+
+    // IN CASE REPLACE ALL DOESN"T WORK
+    // const selectedDate = new Date(document.getElementById('dateInput').value);
+    // let test = new Date("2023-04-11")
+    // console.log("test", test)
+    // console.log(selectedDate);
 }
 
 function filterRooms() {
