@@ -9,24 +9,12 @@ let user;
 let hotel;
 let today;
 
+const selectedDate = document.getElementById('dateInput');
+const searchRooms = document.getElementById('searchRoomsButton');
+const filter = document.getElementById('filterButton');
 
-const filter = document.getElementById('filterButton')
-filter.addEventListener('click', filterRooms)
-
-function filterRooms() {
-    
-    console.log(document.getElementById('bedNum').value)
-    console.log(document.getElementById('bedSize').value)
-    console.log(document.getElementById('roomType').value)
-    console.log(document.getElementById('bidet').value)
-}
-window.addEventListener('keyup', logKey)
-
-function logKey() {
-    console.log(event.key)
-    console.log(event.keyCode)
-    console.log(event.keyChar)
-}
+// searchRooms.addEventListener('click', displayRooms)
+filter.addEventListener('click', filterRooms);
 
 getData();
 
@@ -74,6 +62,18 @@ function displayUserReservations() {
     document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent(hotel.rooms);
 }
 
+function filterRooms() {
+    const bedNum = parseInt(document.getElementById('bedNum').value);
+    const bedSize = document.getElementById('bedSize').value.toLowerCase();
+    const roomType = document.getElementById('roomType').value.toLowerCase();
+    const bidet = document.getElementById('bidet').value;
+    const values = [bedNum, bedSize, roomType, bidet];
+    const filters = [];
+    values.forEach(value => {if(value) filters.push(value)});
+    // This will call the filter method with the tags array
+    if(filters.length > 0) console.log(filters);
+}
+
 // PURELY FOR TESTING
 function logData() {
     user.sortMyBookings(hotel.bookings, today);
@@ -83,3 +83,11 @@ function logData() {
     console.log("hotel: ", hotel);
     console.log("user: ", user);
 }
+
+// window.addEventListener('keyup', logKey)
+
+// function logKey() {
+//     console.log(event.key)
+//     console.log(event.keyCode)
+//     console.log(event.keyChar)
+// }

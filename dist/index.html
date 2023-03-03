@@ -12,7 +12,7 @@
     <label>
       Choose a night:
       <input type="date" name="book-reservation" min="2023-03-03" max="2025-03-03" id="dateInput"/>
-      <button id="bookButton">See Rooms</button>
+      <button id="searchRoomsButton">Search Rooms</button>
     </label>
     <!-- <li>Welcome, #USER</li> -->
     <li id="myReservations">My Reservations</li>
@@ -51,8 +51,8 @@
         <label for="bedNum">Number of Beds:</label>
         <select id="bedNum">
           <option id="filterPlaceholder" value="" disabled selected>Choose..</option>
-          <option>1</option>
-          <option>2</option>
+          <option value="1">One Bed</option>
+          <option value="2">Two Beds</option>
         </select>
         <label for="bedSize">Bed Size:</label>
         <select id="bedSize">
@@ -70,11 +70,11 @@
           <option>Junior Suite</option>
           <option>Single Room</option>
         </select>
-        <label for="bidet">Bidet?:</label>
+        <label for="bidet">Bidet?</label>
         <select id="bidet">
           <option id="filterPlaceholder" value="" disabled selected>Choose..</option>
-          <option>Has Bidet</option>
-          <option>No Bidet 😢</option>
+          <option value="true">Has Bidet</option>
+          <option value="false">No Bidet 😢</option>
         </select>
         <button id="filterButton">Filter Rooms</button>
         <button id="clearButton">Clear Filters</button>
