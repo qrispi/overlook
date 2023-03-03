@@ -1,3 +1,102 @@
 body {
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  background-color: grey;
+  font-size: 2rem;
+  height: 6vh;
+}
+
+.welcome-header {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+/* ALL CUSTOMER VIEW CLASSES */
+.user-future-bookings {
+  display: flex;
+  overflow: auto;
+}
+
+.booking-image {
+  width: 30vw;
+}
+
+.future-booking {
+  width: 32vw;
+  margin: 3vw;
+  background-color: aquamarine;
+}
+
+.user-past-bookings {
+  display: flex;
+  overflow: auto;
+}
+
+.past-booking {
+  text-align: center;
+  margin: 2vw;
+  background-color: bisque;
+  width: 15vw;
+}
+
+/* ALL AVAILABLE ROOMS CLASSES */
+.available-rooms {
+  display: flex;
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 3vw;
+  width: 9vw;
+  height: 50vh;
+  position: fixed;
+  background-color: antiquewhite;
+}
+
+.filtered-rooms {
+  display: flex;
+  width: 85vw;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-left: 15vw;
+}
+
+/* MODAL CLASSES */
+.modal-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  background-color: rgba(0 0 0 / 80%);
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  position: fixed;
+  /* overflow: hidden; */
+}
+
+.clicked-room {
+  z-index: 3;
+  height: 80vh;
+  overflow: auto;
+  background-color: aquamarine;
+}
+
+.modal-image {
+  width: 60vw;
+}
+
+/* ALL UTILTY CLASSES */
+.hidden {
+  display: none;
 }
