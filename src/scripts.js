@@ -27,21 +27,29 @@ function displayUserReservations() {
     const pastSection = document.getElementById('userPastBookings');
     futureSection.innerHTML = '';
     pastSection.innerHTML = '';
-    user.futureBookings.forEach(booking => {
-        futureSection.innerHTML += `
-        <article class="future-booking">
-            <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image">
-            <h5><i>ADD ROOM TYPE</i></h5>
-            <h5>Reserved on ${booking.date}</h5>
-        </article>`
-    });
-    user.pastBookings.forEach(booking => {
-        pastSection.innerHTML += `
-        <article class="past-booking">
-            <h5><i>ADD ROOM TYPE</i></h5>
-            <h5>Stayed in ${booking.date}</h5>
-        </article>`
-    });
+    if(user.futureBookings.length > 0) {
+        user.futureBookings.forEach(booking => {
+            futureSection.innerHTML += `
+            <article class="future-booking">
+                <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image">
+                <h5><i>ADD ROOM TYPE</i></h5>
+                <h5>Reserved on ${booking.date}</h5>
+            </article>`
+        });
+    } else {
+        futureSection.innerHTML = '<h4>No Upcoming Reservations! Book one now with the Book button!</h4>'
+    }
+    if(user.pastBookings.length > 0) {
+        user.pastBookings.forEach(booking => {
+            pastSection.innerHTML += `
+            <article class="past-booking">
+                <h5><i>ADD ROOM TYPE</i></h5>
+                <h5>Stayed in ${booking.date}</h5>
+            </article>`
+        });
+    } else {
+        pastSection.innerHTML = "<h4>Looks like you haven't stayed with us before! Change that by using the book button!</h4>"
+    }
     document.getElementById('userName').innerText = user.name;
     document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent(hotel.rooms);
 }
