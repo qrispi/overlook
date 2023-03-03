@@ -11,7 +11,7 @@ class Customer {
         this.myBookings = bookings.filter(booking => this.id === booking.userID);
         this.myBookings.forEach(booking => {
             let resDate = new Date(booking.date);
-            resDate > today ? this.futureBookings.push(booking) : this.pastBookings.push(booking);
+            resDate >= today ? this.futureBookings.push(booking) : this.pastBookings.push(booking);
         });
     }
 
