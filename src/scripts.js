@@ -127,15 +127,20 @@ function clearRoomOptions() {
 function generateModal(event) {
     if(event.target.className !== 'filtered-rooms') {
         toggleHidden(modalBg);
-        roomNum = event.target.dataset.room;
+        const roomNum = +(event.target.dataset.room);
+        const thisRoom = hotel.rooms.find(room => room.number === roomNum);
+        let bedsMsg = `One ${thisRoom.bedSize} Bed`;
+        if(thisRoom.numBeds === 2) bedsMsg = `Two ${thisRoom.bedSize} Beds`;
+        let bidetMsg = "For Butts who Like Paper 🧻";
+        if(thisRoom.bidet) bidetMsg = "For Butts who like Water 🚿";
         modalBg.innerHTML = '';
         modalBg.innerHTML += `
         <article class="clicked-room">
             <img src="./images/hotel-room.png" alt="picture of booked room" class="modal-image">
-            <h5><i>Junior Suite</i></h5>
-            <h5>2 Twin Beds</h5>
-            <h5>Features a Bidet!</h5>
-            <button>Book now for $$$$$</button>
+            <h5 style="text-transform: capitalize"><i>${thisRoom.roomType}</i></h5>
+            <h5 style="text-transform: capitalize">${bedsMsg}</h5>
+            <h5>${bidetMsg}</h5>
+            <button>Book now for $${thisRoom.costPerNight}</button>
         </article>`;
     }
 }
