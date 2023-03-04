@@ -19,7 +19,7 @@ const availableRooms = document.getElementById('availableRooms');
 const filteredRooms = document.getElementById('filteredRooms');
 const modalBg = document.getElementById('modalBg');
 
-searchRoomsButton.addEventListener('click', displayRooms);
+searchRoomsButton.addEventListener('click', checkForRooms);
 filterButton.addEventListener('click', filterRooms);
 clearFiltersButton.addEventListener('click', clearRoomOptions);
 myReservationsButton.addEventListener('click', displayUserReservations);
@@ -75,33 +75,30 @@ function displayUserReservations() {
     document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent();
 }
 
-function displayRooms() {
+function checkForRooms() {
     const selectedDate = document.getElementById('dateInput').value;
     if(selectedDate) {
         toggleHidden(availableRooms);
         toggleHidden(userReservations);
         const date = selectedDate.replaceAll('-', '/');
         const rooms = hotel.checkDate(date);
-        filteredRooms.innerHTML = '';
-        rooms.forEach(room => {
-            filteredRooms.innerHTML += `
-            <article class="future-booking" data-room="${room.number}">
-                <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image" data-room="${room.number}">
-                <h5 style="text-transform: capitalize" data-room="${room.number}"><i>${room.roomType}</i></h5>
-                <h5 data-room="${room.number}">Total Price $${room.costPerNight}</h5>
-            </article>`
-        });
-        if(rooms.length < 1) {
-            filteredRooms.innerHTML = `<h4 class="no-rooms-msg">Oh No! We don't have any rooms available that match that date and filter! Try a different search!</h4>`
-        }
+        displayAvailableRooms(rooms);
     }
-    
+}
 
-    // IN CASE REPLACE ALL DOESN"T WORK
-    // const selectedDate = new Date(document.getElementById('dateInput').value);
-    // let test = new Date("2023-04-11")
-    // console.log("test", test)
-    // console.log(selectedDate);
+function displayAvailableRooms(rooms) {
+    filteredRooms.innerHTML = '';
+    rooms.forEach(room => {
+        filteredRooms.innerHTML += `
+        <article class="future-booking" data-room="${room.number}">
+            <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image" data-room="${room.number}">
+            <h5 style="text-transform: capitalize" data-room="${room.number}"><i>${room.roomType}</i></h5>
+            <h5 data-room="${room.number}">Total Price $${room.costPerNight}</h5>
+        </article>`;
+    });
+    if(rooms.length < 1) {
+        filteredRooms.innerHTML = `<h4 class="no-rooms-msg">Oh No! We don't have any rooms available that match that date and filter! Try a different search!</h4>`;
+    }
 }
 
 function filterRooms() {
@@ -113,7 +110,6 @@ function filterRooms() {
     const values = [bedNum, bedSize, roomType, bidet];
     const filters = [];
     values.forEach(value => {if(value) filters.push(value)});
-    // This will call the filter method with the tags array
     if(filters.length > 0) {
         let filteredRooms = hotel.filterAvailable(filters);
         console.log(filteredRooms);
