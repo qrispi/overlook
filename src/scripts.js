@@ -48,8 +48,8 @@ function displayUserReservations() {
     user.sortMyBookings(hotel.bookings, today);
     futureSection.innerHTML = '';
     pastSection.innerHTML = '';
-    if(user.futureBookings.length > 0) {
-        user.futureBookings.forEach(booking => {
+    if(user.myBookings.futureBookings.length > 0) {
+        user.myBookings.futureBookings.forEach(booking => {
             futureSection.innerHTML += `
             <article class="future-booking">
                 <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image">
@@ -60,8 +60,8 @@ function displayUserReservations() {
     } else {
         futureSection.innerHTML = '<h4>No Upcoming Reservations! Book one now with the Book button!</h4>';
     }
-    if(user.pastBookings.length > 0) {
-        user.pastBookings.forEach(booking => {
+    if(user.myBookings.pastBookings.length > 0) {
+        user.myBookings.pastBookings.forEach(booking => {
             pastSection.innerHTML += `
             <article class="past-booking">
                 <h5><i>ADD ROOM TYPE</i></h5>
