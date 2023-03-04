@@ -55,7 +55,7 @@ function displayUserReservations() {
                 <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image">
                 <h5><i>ADD ROOM TYPE</i></h5>
                 <h5>Reserved on ${booking.date}</h5>
-            </article>`
+            </article>`;
         });
     } else {
         futureSection.innerHTML = '<h4>No Upcoming Reservations! Book one now with the Book button!</h4>';
@@ -66,7 +66,7 @@ function displayUserReservations() {
             <article class="past-booking">
                 <h5><i>ADD ROOM TYPE</i></h5>
                 <h5>Stayed in ${booking.date}</h5>
-            </article>`
+            </article>`;
         });
     } else {
         pastSection.innerHTML = "<h4>Looks like you haven't stayed with us before! Change that by using the book button!</h4>";
@@ -93,7 +93,7 @@ function displayAvailableRooms(rooms) {
         <article class="future-booking" data-room="${room.number}">
             <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image" data-room="${room.number}">
             <h5 style="text-transform: capitalize" data-room="${room.number}"><i>${room.roomType}</i></h5>
-            <h5 data-room="${room.number}">Total Price $${room.costPerNight}</h5>
+            <h5 data-room="${room.number}">Total Price $${room.costPerNight.toFixed(2)}</h5>
         </article>`;
     });
     if(rooms.length < 1) {
@@ -122,6 +122,9 @@ function clearRoomOptions() {
     document.getElementById('bedSize').value = '';
     document.getElementById('roomType').value = '';
     document.getElementById('bidet').value = '';
+    if(hotel.available) {
+        displayAvailableRooms(hotel.available);
+    }
 }
 
 function generateModal(event) {
@@ -140,7 +143,7 @@ function generateModal(event) {
             <h5 style="text-transform: capitalize"><i>${thisRoom.roomType}</i></h5>
             <h5 style="text-transform: capitalize">${bedsMsg}</h5>
             <h5>${bidetMsg}</h5>
-            <button>Book now for $${thisRoom.costPerNight}</button>
+            <button>Book now for $${thisRoom.costPerNight.toFixed(2)}</button>
         </article>`;
     }
 }
@@ -165,11 +168,3 @@ function logData() {
     console.log("hotel: ", hotel);
     console.log("user: ", user);
 }
-
-// window.addEventListener('keyup', logKey)
-
-// function logKey() {
-//     console.log(event.key)
-//     console.log(event.keyCode)
-//     console.log(event.keyChar)
-// }
