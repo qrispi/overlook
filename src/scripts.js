@@ -85,10 +85,10 @@ function displayRooms() {
         filteredRooms.innerHTML = '';
         rooms.forEach(room => {
             filteredRooms.innerHTML += `
-            <article class="future-booking">
-                <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image">
-                <h5><i>${room.roomType}</i></h5>
-                <h5>Total Price $${room.costPerNight}</h5>
+            <article class="future-booking" data-room="${room.number}">
+                <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image" data-room="${room.number}">
+                <h5 style="text-transform: capitalize" data-room="${room.number}"><i>${room.roomType}</i></h5>
+                <h5 data-room="${room.number}">Total Price $${room.costPerNight}</h5>
             </article>`
         });
         if(rooms.length < 1) {
@@ -127,6 +127,7 @@ function clearRoomOptions() {
 function generateModal(event) {
     if(event.target.className !== 'filtered-rooms') {
         toggleHidden(modalBg);
+        roomNum = event.target.dataset.room;
         modalBg.innerHTML = '';
         modalBg.innerHTML += `
         <article class="clicked-room">
