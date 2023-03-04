@@ -15,7 +15,7 @@ class Booking {
         rooms.forEach(room => {
             if(room.number === this.roomNumber) {
                 this.roomType = room.roomType;
-                this.bidet = room.roomType;
+                this.bidet = room.bidet;
                 this.bedSize = room.bedSize;
                 this.numBeds = room.numBeds;
                 this.costPerNight = room.costPerNight;

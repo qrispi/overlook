@@ -72,7 +72,7 @@ function displayUserReservations() {
         pastSection.innerHTML = "<h4>Looks like you haven't stayed with us before! Change that by using the book button!</h4>";
     }
     document.getElementById('userName').innerText = user.name;
-    document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent(hotel.rooms);
+    document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent();
 }
 
 function displayRooms() {
@@ -143,6 +143,10 @@ function toggleHidden(element) {
 
 // PURELY FOR TESTING
 function logData() {
+    // THIS PART IS IMPORTANT
+    hotel.updateBookings();
+
+
     console.log('Today: ', today);
     console.log("hotel: ", hotel);
     console.log("user: ", user);
