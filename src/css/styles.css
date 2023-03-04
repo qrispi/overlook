@@ -29,6 +29,7 @@ nav {
 }
 
 .future-booking {
+  text-align: right;
   width: 32vw;
   margin: 3vw;
   background-color: aquamarine;

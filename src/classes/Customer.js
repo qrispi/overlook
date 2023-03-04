@@ -15,15 +15,8 @@ class Customer {
         });
     }
 
-    calculateMoneySpent(rooms) {
-        const moneySpent = this.myBookings.reduce((acc, booking) => {
-            rooms.forEach(room => {
-                if(room.number === booking.roomNumber) {
-                    acc += room.costPerNight;
-                }
-            });
-            return acc;
-        }, 0);
+    calculateMoneySpent() {
+        const moneySpent = this.myBookings.reduce((total, booking) => total += booking.costPerNight, 0);
         return Math.round(moneySpent);
     }
 }
