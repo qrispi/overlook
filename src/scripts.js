@@ -16,11 +16,15 @@ const myReservationsButton = document.getElementById('myReservationsNav');
 
 const userReservations = document.getElementById('myReservations');
 const availableRooms = document.getElementById('availableRooms');
+const filteredRooms = document.getElementById('filteredRooms');
+const modalBg = document.getElementById('modalBg');
 
 searchRoomsButton.addEventListener('click', displayRooms);
 filterButton.addEventListener('click', filterRooms);
 clearFiltersButton.addEventListener('click', clearRoomOptions);
 myReservationsButton.addEventListener('click', displayUserReservations);
+filteredRooms.addEventListener('click', generateModal);
+modalBg.addEventListener('click', collapseModal);
 
 getData();
 
@@ -107,6 +111,27 @@ function clearRoomOptions() {
     document.getElementById('bedSize').value = '';
     document.getElementById('roomType').value = '';
     document.getElementById('bidet').value = '';
+}
+
+function generateModal(event) {
+    if(event.target.className !== 'filtered-rooms') {
+        toggleHidden(modalBg);
+        modalBg.innerHTML = '';
+        modalBg.innerHTML += `
+        <article class="clicked-room">
+            <img src="./images/hotel-room.png" alt="picture of booked room" class="modal-image">
+            <h5><i>Junior Suite</i></h5>
+            <h5>2 Twin Beds</h5>
+            <h5>Features a Bidet!</h5>
+            <button>Book now for $$$$$</button>
+        </article>`;
+    }
+}
+
+function collapseModal(event) {
+    if(event.target.className === 'modal-bg') {
+        toggleHidden(modalBg);
+    }
 }
 
 function toggleHidden(element) {
