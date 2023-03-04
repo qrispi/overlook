@@ -81,14 +81,20 @@ function displayRooms() {
         toggleHidden(availableRooms);
         toggleHidden(userReservations);
         const date = selectedDate.replaceAll('-', '/');
-        // This will get sent to method which will return an array of rooms that match
-        console.log(date);
         const rooms = hotel.checkDate(date);
-        console.log(rooms)
+        filteredRooms.innerHTML = '';
+        rooms.forEach(room => {
+            filteredRooms.innerHTML += `
+            <article class="future-booking">
+                <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image">
+                <h5><i>${room.roomType}</i></h5>
+                <h5>Total Price $${room.costPerNight}</h5>
+            </article>`
+        });
+        if(rooms.length < 1) {
+            filteredRooms.innerHTML = `<h4 class="no-rooms-msg">Oh No! We don't have any rooms available that match that date and filter! Try a different search!</h4>`
+        }
     }
-    // if(availableRoomsArray.length < 1) {
-    //     filteredRooms.innerHTML = "<h4 class="no-rooms-msg">Oh No! We don't have any rooms available that match that date and filter! Try a different search!</h4>"
-    // }
     
 
     // IN CASE REPLACE ALL DOESN"T WORK
