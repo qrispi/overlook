@@ -19,4 +19,4 @@ function getAllPromises(customerID) {
     return Promise.all([fetchData('rooms', 'GET'), fetchData('bookings', 'GET'), fetchData(customerPath, 'GET')]);
 }
 
-export default getAllPromises;
+export default {getAllPromises, fetchData};

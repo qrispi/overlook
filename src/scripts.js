@@ -1,5 +1,5 @@
 import './css/styles.css';
-import getAllPromises from './api-calls';
+import apiFunctions from './api-calls';
 import Hotel from './classes/Hotel';
 import Customer from './classes/Customer';
 // import './images/turing-logo.png';
@@ -8,6 +8,7 @@ import './images/hotel-room.png';
 let user;
 let hotel;
 let today;
+let selectedDate;
 
 const searchRoomsButton = document.getElementById('searchRoomsButton');
 const filterButton = document.getElementById('filterButton');
@@ -32,7 +33,7 @@ function getData() {
     today = new Date();
     today.setHours(0,0,0,0);
     let loginID = 5;
-    getAllPromises(loginID).then(data => {
+    apiFunctions.getAllPromises(loginID).then(data => {
         hotel = new Hotel(data[0].rooms, data[1].bookings);
         user = new Customer(data[2]);
     })
@@ -76,12 +77,12 @@ function displayUserReservations() {
 }
 
 function checkForRooms() {
-    const selectedDate = document.getElementById('dateInput').value;
-    if(selectedDate) {
+    const date = document.getElementById('dateInput').value;
+    if(date) {
         toggleHidden(availableRooms);
         toggleHidden(userReservations);
-        const date = selectedDate.replaceAll('-', '/');
-        const rooms = hotel.checkDate(date);
+        selectedDate = date.replaceAll('-', '/');
+        const rooms = hotel.checkDate(selectedDate);
         displayAvailableRooms(rooms);
     }
 }
@@ -143,8 +144,9 @@ function generateModal(event) {
             <h5 style="text-transform: capitalize"><i>${thisRoom.roomType}</i></h5>
             <h5 style="text-transform: capitalize">${bedsMsg}</h5>
             <h5>${bidetMsg}</h5>
-            <button>Book now for $${thisRoom.costPerNight.toFixed(2)}</button>
+            <button id="modalBookButton">Book now for $${thisRoom.costPerNight.toFixed(2)}</button>
         </article>`;
+        document.getElementById('modalBookButton').addEventListener('click', (num) => bookRoom(roomNum));
     }
 }
 
@@ -152,6 +154,12 @@ function collapseModal(event) {
     if(event.target.className === 'modal-bg') {
         toggleHidden(modalBg);
     }
+}
+
+function bookRoom(roomNumber) {
+    const body = {"userID": user.id, "date": selectedDate, "roomNumber": roomNumber};
+    console.log(body);
+    console.log(apiFunctions.fetchData('bookings', 'POST', body));
 }
 
 function toggleHidden(element) {
