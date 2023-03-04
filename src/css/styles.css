@@ -89,12 +89,17 @@ aside {
 .clicked-room {
   z-index: 3;
   height: 80vh;
+  width: 60vw;
   overflow: auto;
   background-color: aquamarine;
 }
 
 .modal-image {
   width: 60vw;
+}
+
+.confetti-image {
+  width: 40vw;
 }
 
 /* ALL UTILTY CLASSES */

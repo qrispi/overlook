@@ -2,7 +2,7 @@ import './css/styles.css';
 import apiFunctions from './api-calls';
 import Hotel from './classes/Hotel';
 import Customer from './classes/Customer';
-// import './images/turing-logo.png';
+import './images/confetti.gif';
 import './images/hotel-room.png';
 
 let user;
@@ -152,25 +152,42 @@ function generateModal(event) {
             <h5 style="text-transform: capitalize"><i>${thisRoom.roomType}</i></h5>
             <h5 style="text-transform: capitalize">${bedsMsg}</h5>
             <h5>${bidetMsg}</h5>
-            <button id="modalBookButton">Book now for $${thisRoom.costPerNight.toFixed(2)}</button>
+            <div id="bookBox">
+                <button id="modalBookButton">Book now for $${thisRoom.costPerNight.toFixed(2)}</button>
+            </div>
         </article>`;
-        document.getElementById('modalBookButton').addEventListener('click', () => bookRoom(roomNum));
+        document.getElementById('modalBookButton').addEventListener('click', () => bookRoom(roomNum, thisRoom));
     }
 }
 
-function collapseModal(event) {
-    if(event.target.className === 'modal-bg') {
+function collapseModal(event, command) {
+    if(command || event.target.className === 'modal-bg') {
         toggleHidden(modalBg);
     }
 }
 
-function bookRoom(roomNumber) {
+function bookRoom(roomNumber, thisRoom) {
+    const bookBox = document.getElementById('bookBox');
+    bookBox.innerHTML = `<h5>Booking in progress! Please wait...</h5>`;
     const body = {"userID": user.id, "date": selectedDate, "roomNumber": roomNumber};
     apiFunctions.fetchData('bookings', 'POST', body);
     apiFunctions.fetchData('bookings', 'GET').then(data => {
         hotel.updateBookings(data.bookings);
         checkForRooms();
+        confirmationModal(thisRoom);
     });
+}
+
+function confirmationModal(thisRoom) {
+    modalBg.innerHTML = '';
+    modalBg.innerHTML += `
+        <article class="clicked-room">
+            <img src="./images/confetti.gif" alt="picture of exploding confetti" class="confetti-image">
+            <h5>Success!</h5>
+            <h5>You have booked the <i style="text-transform: capitalize">${thisRoom.roomType}</i> on ${selectedDate}!</h5>
+            <h5>We are so excited to have you for the whole night!</h5>
+        </article>`;
+    setTimeout(collapseModal, 3000, null, true);
 }
 
 function toggleHidden(element) {
