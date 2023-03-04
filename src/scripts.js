@@ -83,6 +83,8 @@ function displayRooms() {
         const date = selectedDate.replaceAll('-', '/');
         // This will get sent to method which will return an array of rooms that match
         console.log(date);
+        const rooms = hotel.checkDate(date);
+        console.log(rooms)
     }
     // if(availableRoomsArray.length < 1) {
     //     filteredRooms.innerHTML = "<h4 class="no-rooms-msg">Oh No! We don't have any rooms available that match that date and filter! Try a different search!</h4>"
