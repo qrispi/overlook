@@ -9,6 +9,7 @@ let user;
 let hotel;
 let today;
 let selectedDate;
+let userView;
 
 const searchRoomsButton = document.getElementById('searchRoomsButton');
 const filterButton = document.getElementById('filterButton');
@@ -43,45 +44,51 @@ function getData() {
 }
 
 function displayUserReservations() {
-    const futureSection = document.getElementById('userFutureBookings');
-    const pastSection = document.getElementById('userPastBookings');
-    toggleHidden(availableRooms);
-    toggleHidden(userReservations);
-    user.sortMyBookings(hotel.bookings, today);
-    futureSection.innerHTML = '';
-    pastSection.innerHTML = '';
-    if(user.myBookings.futureBookings.length > 0) {
-        user.myBookings.futureBookings.forEach(booking => {
-            futureSection.innerHTML += `
-            <article class="future-booking">
-                <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image">
-                <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
-                <h5>Reserved on ${booking.date}</h5>
-            </article>`;
-        });
-    } else {
-        futureSection.innerHTML = '<h4>No Upcoming Reservations! Book one now with the Book button!</h4>';
+    if(!userView) {
+        userView = true;
+        const futureSection = document.getElementById('userFutureBookings');
+        const pastSection = document.getElementById('userPastBookings');
+        toggleHidden(availableRooms);
+        toggleHidden(userReservations);
+        user.sortMyBookings(hotel.bookings, today);
+        futureSection.innerHTML = '';
+        pastSection.innerHTML = '';
+        if(user.myBookings.futureBookings.length > 0) {
+            user.myBookings.futureBookings.forEach(booking => {
+                futureSection.innerHTML += `
+                <article class="future-booking">
+                    <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image">
+                    <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
+                    <h5>Reserved on ${booking.date}</h5>
+                </article>`;
+            });
+        } else {
+            futureSection.innerHTML = '<h4>No Upcoming Reservations! Book one now with the Book button!</h4>';
+        }
+        if(user.myBookings.pastBookings.length > 0) {
+            user.myBookings.pastBookings.forEach(booking => {
+                pastSection.innerHTML += `
+                <article class="past-booking">
+                    <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
+                    <h5>Stayed on ${booking.date}</h5>
+                </article>`;
+            });
+        } else {
+            pastSection.innerHTML = "<h4>Looks like you haven't stayed with us before! Change that by using the book button!</h4>";
+        }
+        document.getElementById('userName').innerText = user.name;
+        document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent();
     }
-    if(user.myBookings.pastBookings.length > 0) {
-        user.myBookings.pastBookings.forEach(booking => {
-            pastSection.innerHTML += `
-            <article class="past-booking">
-                <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
-                <h5>Stayed on ${booking.date}</h5>
-            </article>`;
-        });
-    } else {
-        pastSection.innerHTML = "<h4>Looks like you haven't stayed with us before! Change that by using the book button!</h4>";
-    }
-    document.getElementById('userName').innerText = user.name;
-    document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent();
 }
 
 function checkForRooms() {
     const date = document.getElementById('dateInput').value;
     if(date) {
-        toggleHidden(availableRooms);
-        toggleHidden(userReservations);
+        if(userView) {
+            userView = false;
+            toggleHidden(availableRooms);
+            toggleHidden(userReservations);
+        }
         selectedDate = date.replaceAll('-', '/');
         const rooms = hotel.checkDate(selectedDate);
         displayAvailableRooms(rooms);
