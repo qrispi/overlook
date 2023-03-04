@@ -53,7 +53,7 @@ function displayUserReservations() {
             futureSection.innerHTML += `
             <article class="future-booking">
                 <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image">
-                <h5><i>ADD ROOM TYPE</i></h5>
+                <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
                 <h5>Reserved on ${booking.date}</h5>
             </article>`;
         });
@@ -64,8 +64,8 @@ function displayUserReservations() {
         user.myBookings.pastBookings.forEach(booking => {
             pastSection.innerHTML += `
             <article class="past-booking">
-                <h5><i>ADD ROOM TYPE</i></h5>
-                <h5>Stayed in ${booking.date}</h5>
+                <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
+                <h5>Stayed on ${booking.date}</h5>
             </article>`;
         });
     } else {
