@@ -5,6 +5,7 @@ class Hotel {
     constructor(roomsData, bookingData) {
         this.rooms = roomsData.map(room => new Room(room));
         this.bookings = bookingData.map(booking => new Booking(booking));
+        this.available;
     }
 
     updateBookings() {
@@ -18,7 +19,20 @@ class Hotel {
                 unavailable.push(booking.roomNumber);
             }
         });
-        return this.rooms.filter(room => !unavailable.includes(room.number));
+        this.available = this.rooms.filter(room => !unavailable.includes(room.number));
+        return this.available;
+    }
+
+    filterAvailable(tags) {
+        let filtered = this.available;
+        tags.forEach(tag => {
+            filtered = filtered.filter(room => {
+                let values = Object.values(room);
+                values.splice(0, 1);
+                if(values.includes(tag)) return room;
+            });
+        });
+        return filtered;
     }
 }
 

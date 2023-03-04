@@ -108,12 +108,16 @@ function filterRooms() {
     const bedNum = parseInt(document.getElementById('bedNum').value);
     const bedSize = document.getElementById('bedSize').value.toLowerCase();
     const roomType = document.getElementById('roomType').value.toLowerCase();
-    const bidet = document.getElementById('bidet').value;
+    const bidetString = document.getElementById('bidet').value;
+    const bidet = (bidetString === 'true');
     const values = [bedNum, bedSize, roomType, bidet];
     const filters = [];
     values.forEach(value => {if(value) filters.push(value)});
     // This will call the filter method with the tags array
-    if(filters.length > 0) console.log(filters);
+    if(filters.length > 0) {
+        let filteredRooms = hotel.filterAvailable(filters);
+        console.log(filteredRooms);
+    }
 }
 
 function clearRoomOptions() {
