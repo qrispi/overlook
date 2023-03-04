@@ -112,7 +112,7 @@ function filterRooms() {
     values.forEach(value => {if(value) filters.push(value)});
     if(filters.length > 0) {
         let filteredRooms = hotel.filterAvailable(filters);
-        console.log(filteredRooms);
+        displayAvailableRooms(filteredRooms);
     }
 }
 
