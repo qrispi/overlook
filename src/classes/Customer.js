@@ -16,10 +16,7 @@ class Customer {
     }
 
     calculateMoneySpent() {
-        const moneySpent = this.myBookings.reduce((acc, booking) => {
-                    acc += booking.costPerNight;
-                    return acc;
-                }, 0);
+        const moneySpent = this.myBookings.reduce((total, booking) => total += booking.costPerNight, 0);
         return Math.round(moneySpent);
     }
 }
