@@ -3,20 +3,23 @@ class Customer {
         this.id = customerData.id;
         this.name = customerData.name;
         this.myBookings;
-        this.futureBookings = [];
-        this.pastBookings = [];
     }
 
     sortMyBookings(bookings, today) {
-        this.myBookings = bookings.filter(booking => this.id === booking.userID);
-        this.myBookings.forEach(booking => {
+        const allBookings = bookings.filter(booking => this.id === booking.userID);
+        this.myBookings = allBookings.reduce((acc, booking) => {
             let resDate = new Date(booking.date);
-            resDate >= today ? this.futureBookings.push(booking) : this.pastBookings.push(booking);
-        });
+            resDate >= today ? acc.futureBookings.push(booking) : acc.pastBookings.push(booking);
+            return acc;
+        }, {futureBookings: [], pastBookings: []});
     }
 
     calculateMoneySpent() {
-        const moneySpent = this.myBookings.reduce((total, booking) => total += booking.costPerNight, 0);
+        const keys = Object.keys(this.myBookings);
+        const moneySpent = keys.reduce((total, key) => {
+            this.myBookings[key].forEach(booking => total += booking.costPerNight);
+            return total;
+        }, 0);
         return Math.round(moneySpent);
     }
 }

@@ -1,13 +1,15 @@
 import './css/styles.css';
-import getAllPromises from './api-calls';
+import apiFunctions from './api-calls';
 import Hotel from './classes/Hotel';
 import Customer from './classes/Customer';
-// import './images/turing-logo.png';
+import './images/confetti.gif';
 import './images/hotel-room.png';
 
 let user;
 let hotel;
 let today;
+let selectedDate;
+let userView;
 
 const searchRoomsButton = document.getElementById('searchRoomsButton');
 const filterButton = document.getElementById('filterButton');
@@ -32,8 +34,9 @@ function getData() {
     today = new Date();
     today.setHours(0,0,0,0);
     let loginID = 5;
-    getAllPromises(loginID).then(data => {
-        hotel = new Hotel(data[0].rooms, data[1].bookings);
+    apiFunctions.getAllPromises(loginID).then(data => {
+        hotel = new Hotel(data[0].rooms);
+        hotel.updateBookings(data[1].bookings);
         user = new Customer(data[2]);
     })
     .then(logData)
@@ -41,47 +44,53 @@ function getData() {
 }
 
 function displayUserReservations() {
-    const futureSection = document.getElementById('userFutureBookings');
-    const pastSection = document.getElementById('userPastBookings');
-    toggleHidden(availableRooms);
-    toggleHidden(userReservations);
-    user.sortMyBookings(hotel.bookings, today);
-    futureSection.innerHTML = '';
-    pastSection.innerHTML = '';
-    if(user.futureBookings.length > 0) {
-        user.futureBookings.forEach(booking => {
-            futureSection.innerHTML += `
-            <article class="future-booking">
-                <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image">
-                <h5><i>ADD ROOM TYPE</i></h5>
-                <h5>Reserved on ${booking.date}</h5>
-            </article>`;
-        });
-    } else {
-        futureSection.innerHTML = '<h4>No Upcoming Reservations! Book one now with the Book button!</h4>';
+    if(!userView) {
+        userView = true;
+        const futureSection = document.getElementById('userFutureBookings');
+        const pastSection = document.getElementById('userPastBookings');
+        toggleHidden(availableRooms);
+        toggleHidden(userReservations);
+        user.sortMyBookings(hotel.bookings, today);
+        futureSection.innerHTML = '';
+        pastSection.innerHTML = '';
+        if(user.myBookings.futureBookings.length > 0) {
+            user.myBookings.futureBookings.forEach(booking => {
+                futureSection.innerHTML += `
+                <article class="future-booking">
+                    <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image">
+                    <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
+                    <h5>Reserved on ${booking.date}</h5>
+                </article>`;
+            });
+        } else {
+            futureSection.innerHTML = '<h4>No Upcoming Reservations! Book one now with the Book button!</h4>';
+        }
+        if(user.myBookings.pastBookings.length > 0) {
+            user.myBookings.pastBookings.forEach(booking => {
+                pastSection.innerHTML += `
+                <article class="past-booking">
+                    <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
+                    <h5>Stayed on ${booking.date}</h5>
+                </article>`;
+            });
+        } else {
+            pastSection.innerHTML = "<h4>Looks like you haven't stayed with us before! Change that by using the book button!</h4>";
+        }
+        document.getElementById('userName').innerText = user.name;
+        document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent();
     }
-    if(user.pastBookings.length > 0) {
-        user.pastBookings.forEach(booking => {
-            pastSection.innerHTML += `
-            <article class="past-booking">
-                <h5><i>ADD ROOM TYPE</i></h5>
-                <h5>Stayed in ${booking.date}</h5>
-            </article>`;
-        });
-    } else {
-        pastSection.innerHTML = "<h4>Looks like you haven't stayed with us before! Change that by using the book button!</h4>";
-    }
-    document.getElementById('userName').innerText = user.name;
-    document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent();
 }
 
 function checkForRooms() {
-    const selectedDate = document.getElementById('dateInput').value;
-    if(selectedDate) {
-        toggleHidden(availableRooms);
-        toggleHidden(userReservations);
-        const date = selectedDate.replaceAll('-', '/');
-        const rooms = hotel.checkDate(date);
+    const date = document.getElementById('dateInput').value;
+    if(date) {
+        if(userView) {
+            userView = false;
+            toggleHidden(availableRooms);
+            toggleHidden(userReservations);
+        }
+        selectedDate = date.replaceAll('-', '/');
+        const rooms = hotel.checkDate(selectedDate);
         displayAvailableRooms(rooms);
     }
 }
@@ -143,15 +152,42 @@ function generateModal(event) {
             <h5 style="text-transform: capitalize"><i>${thisRoom.roomType}</i></h5>
             <h5 style="text-transform: capitalize">${bedsMsg}</h5>
             <h5>${bidetMsg}</h5>
-            <button>Book now for $${thisRoom.costPerNight.toFixed(2)}</button>
+            <div id="bookBox">
+                <button id="modalBookButton">Book now for $${thisRoom.costPerNight.toFixed(2)}</button>
+            </div>
         </article>`;
+        document.getElementById('modalBookButton').addEventListener('click', () => bookRoom(roomNum, thisRoom));
     }
 }
 
-function collapseModal(event) {
-    if(event.target.className === 'modal-bg') {
+function collapseModal(event, command) {
+    if(command || event.target.className === 'modal-bg') {
         toggleHidden(modalBg);
     }
+}
+
+function bookRoom(roomNumber, thisRoom) {
+    const bookBox = document.getElementById('bookBox');
+    bookBox.innerHTML = `<h5>Booking in progress! Please wait...</h5>`;
+    const body = {"userID": user.id, "date": selectedDate, "roomNumber": roomNumber};
+    apiFunctions.fetchData('bookings', 'POST', body);
+    apiFunctions.fetchData('bookings', 'GET').then(data => {
+        hotel.updateBookings(data.bookings);
+        checkForRooms();
+        confirmationModal(thisRoom);
+    });
+}
+
+function confirmationModal(thisRoom) {
+    modalBg.innerHTML = '';
+    modalBg.innerHTML += `
+        <article class="clicked-room">
+            <img src="./images/confetti.gif" alt="picture of exploding confetti" class="confetti-image">
+            <h5>Success!</h5>
+            <h5>You have booked the <i style="text-transform: capitalize">${thisRoom.roomType}</i> on ${selectedDate}!</h5>
+            <h5>We are so excited to have you for the whole night!</h5>
+        </article>`;
+    setTimeout(collapseModal, 3000, null, true);
 }
 
 function toggleHidden(element) {
@@ -160,10 +196,6 @@ function toggleHidden(element) {
 
 // PURELY FOR TESTING
 function logData() {
-    // THIS PART IS IMPORTANT
-    hotel.updateBookings();
-
-
     console.log('Today: ', today);
     console.log("hotel: ", hotel);
     console.log("user: ", user);
