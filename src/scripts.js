@@ -2,31 +2,29 @@ import './css/styles.css';
 import getAllPromises from './api-calls';
 import Hotel from './classes/Hotel';
 import Customer from './classes/Customer';
-import './images/turing-logo.png';
+// import './images/turing-logo.png';
 import './images/hotel-room.png';
 
 let user;
 let hotel;
 let today;
 
+const searchRoomsButton = document.getElementById('searchRoomsButton');
+const filterButton = document.getElementById('filterButton');
+const clearFiltersButton = document.getElementById('clearButton');
+const myReservationsButton = document.getElementById('myReservationsNav');
 
-const filter = document.getElementById('filterButton')
-filter.addEventListener('click', filterRooms)
+const userReservations = document.getElementById('myReservations');
+const availableRooms = document.getElementById('availableRooms');
+const filteredRooms = document.getElementById('filteredRooms');
+const modalBg = document.getElementById('modalBg');
 
-function filterRooms() {
-    
-    console.log(document.getElementById('bedNum').value)
-    console.log(document.getElementById('bedSize').value)
-    console.log(document.getElementById('roomType').value)
-    console.log(document.getElementById('bidet').value)
-}
-window.addEventListener('keyup', logKey)
-
-function logKey() {
-    console.log(event.key)
-    console.log(event.keyCode)
-    console.log(event.keyChar)
-}
+searchRoomsButton.addEventListener('click', displayRooms);
+filterButton.addEventListener('click', filterRooms);
+clearFiltersButton.addEventListener('click', clearRoomOptions);
+myReservationsButton.addEventListener('click', displayUserReservations);
+filteredRooms.addEventListener('click', generateModal);
+modalBg.addEventListener('click', collapseModal);
 
 getData();
 
@@ -45,6 +43,9 @@ function getData() {
 function displayUserReservations() {
     const futureSection = document.getElementById('userFutureBookings');
     const pastSection = document.getElementById('userPastBookings');
+    toggleHidden(availableRooms);
+    toggleHidden(userReservations);
+    user.sortMyBookings(hotel.bookings, today);
     futureSection.innerHTML = '';
     pastSection.innerHTML = '';
     if(user.futureBookings.length > 0) {
@@ -74,12 +75,83 @@ function displayUserReservations() {
     document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent(hotel.rooms);
 }
 
+function displayRooms() {
+    const selectedDate = document.getElementById('dateInput').value;
+    if(selectedDate) {
+        toggleHidden(availableRooms);
+        toggleHidden(userReservations);
+        const date = selectedDate.replaceAll('-', '/');
+        // This will get sent to method which will return an array of rooms that match
+        console.log(date);
+    }
+    // if(availableRoomsArray.length < 1) {
+    //     filteredRooms.innerHTML = "<h4 class="no-rooms-msg">Oh No! We don't have any rooms available that match that date and filter! Try a different search!</h4>"
+    // }
+    
+
+    // IN CASE REPLACE ALL DOESN"T WORK
+    // const selectedDate = new Date(document.getElementById('dateInput').value);
+    // let test = new Date("2023-04-11")
+    // console.log("test", test)
+    // console.log(selectedDate);
+}
+
+function filterRooms() {
+    const bedNum = parseInt(document.getElementById('bedNum').value);
+    const bedSize = document.getElementById('bedSize').value.toLowerCase();
+    const roomType = document.getElementById('roomType').value.toLowerCase();
+    const bidet = document.getElementById('bidet').value;
+    const values = [bedNum, bedSize, roomType, bidet];
+    const filters = [];
+    values.forEach(value => {if(value) filters.push(value)});
+    // This will call the filter method with the tags array
+    if(filters.length > 0) console.log(filters);
+}
+
+function clearRoomOptions() {
+    // Refactor these to be global since function above uses too?
+    document.getElementById('bedNum').value = '';
+    document.getElementById('bedSize').value = '';
+    document.getElementById('roomType').value = '';
+    document.getElementById('bidet').value = '';
+}
+
+function generateModal(event) {
+    if(event.target.className !== 'filtered-rooms') {
+        toggleHidden(modalBg);
+        modalBg.innerHTML = '';
+        modalBg.innerHTML += `
+        <article class="clicked-room">
+            <img src="./images/hotel-room.png" alt="picture of booked room" class="modal-image">
+            <h5><i>Junior Suite</i></h5>
+            <h5>2 Twin Beds</h5>
+            <h5>Features a Bidet!</h5>
+            <button>Book now for $$$$$</button>
+        </article>`;
+    }
+}
+
+function collapseModal(event) {
+    if(event.target.className === 'modal-bg') {
+        toggleHidden(modalBg);
+    }
+}
+
+function toggleHidden(element) {
+    element.classList.toggle('hidden');
+}
+
 // PURELY FOR TESTING
 function logData() {
-    user.sortMyBookings(hotel.bookings, today);
-
-
     console.log('Today: ', today);
     console.log("hotel: ", hotel);
     console.log("user: ", user);
 }
+
+// window.addEventListener('keyup', logKey)
+
+// function logKey() {
+//     console.log(event.key)
+//     console.log(event.keyCode)
+//     console.log(event.keyChar)
+// }
