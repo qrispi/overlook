@@ -2,13 +2,14 @@ import Room from "./Room.js";
 import Booking from "./Booking.js";
 
 class Hotel {
-    constructor(roomsData, bookingData) {
+    constructor(roomsData) {
         this.rooms = roomsData.map(room => new Room(room));
-        this.bookings = bookingData.map(booking => new Booking(booking));
+        this.bookings;
         this.available;
     }
 
-    updateBookings() {
+    updateBookings(bookingData) {
+        this.bookings = bookingData.map(booking => new Booking(booking));
         this.bookings.forEach(booking => booking.populateRoomInfo(this.rooms));
     }
 

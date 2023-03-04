@@ -34,7 +34,8 @@ function getData() {
     today.setHours(0,0,0,0);
     let loginID = 5;
     apiFunctions.getAllPromises(loginID).then(data => {
-        hotel = new Hotel(data[0].rooms, data[1].bookings);
+        hotel = new Hotel(data[0].rooms);
+        hotel.updateBookings(data[1].bookings);
         user = new Customer(data[2]);
     })
     .then(logData)
@@ -146,7 +147,7 @@ function generateModal(event) {
             <h5>${bidetMsg}</h5>
             <button id="modalBookButton">Book now for $${thisRoom.costPerNight.toFixed(2)}</button>
         </article>`;
-        document.getElementById('modalBookButton').addEventListener('click', (num) => bookRoom(roomNum));
+        document.getElementById('modalBookButton').addEventListener('click', () => bookRoom(roomNum));
     }
 }
 
@@ -158,8 +159,11 @@ function collapseModal(event) {
 
 function bookRoom(roomNumber) {
     const body = {"userID": user.id, "date": selectedDate, "roomNumber": roomNumber};
-    console.log(body);
-    console.log(apiFunctions.fetchData('bookings', 'POST', body));
+    apiFunctions.fetchData('bookings', 'POST', body);
+    apiFunctions.fetchData('bookings', 'GET').then(data => {
+        hotel.updateBookings(data.bookings);
+        checkForRooms();
+    });
 }
 
 function toggleHidden(element) {
@@ -168,10 +172,6 @@ function toggleHidden(element) {
 
 // PURELY FOR TESTING
 function logData() {
-    // THIS PART IS IMPORTANT
-    hotel.updateBookings();
-
-
     console.log('Today: ', today);
     console.log("hotel: ", hotel);
     console.log("user: ", user);
