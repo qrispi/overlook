@@ -119,6 +119,7 @@ aside {
 .login-box {
   height: 60vh;
   width: 60vw;
+  z-index: 11;
   background-color: cornflowerblue;
   text-align: center;
 }

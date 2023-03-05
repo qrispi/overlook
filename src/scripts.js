@@ -21,6 +21,7 @@ const userReservations = document.getElementById('myReservations');
 const availableRooms = document.getElementById('availableRooms');
 const filteredRooms = document.getElementById('filteredRooms');
 const modalBg = document.getElementById('modalBg');
+const loginPage = document.getElementById('loginPage');
 
 searchRoomsButton.addEventListener('click', checkForRooms);
 filterButton.addEventListener('click', filterRooms);
@@ -32,24 +33,10 @@ modalBg.addEventListener('click', collapseModal);
 
 // getData();
 
-function getData() {
-    today = new Date();
-    today.setHours(0,0,0,0);
-    let loginID = 5;
-    apiFunctions.getAllPromises(loginID).then(data => {
-        hotel = new Hotel(data[0].rooms);
-        hotel.updateBookings(data[1].bookings);
-        user = new Customer(data[2]);
-    })
-    .then(logData)
-    .then(displayUserReservations);
-}
-
 function validateLogin() {
     const username = document.getElementById('usernameInput').value;
     const password = document.getElementById('passwordInput').value;
     const errorMsg = document.getElementById('errorMessage');
-    // errorMsg.innerText = ''
     if(!username && !password) {
         errorMsg.innerText = "Please enter your username and password!";
     }
@@ -70,11 +57,33 @@ function validateLogin() {
                 errorMsg.innerText = "No user found with that name!";
             } else {
                 errorMsg.innerText = "Welcome! Please wait while we gather your data...";
-                console.log(userID)
-                console.log(password)
+                getData(userID);
+                console.log("ID: ", userID)
+                console.log("Password: ", password)
             }
         }
     }
+}
+
+function getData(loginID) {
+    today = new Date();
+    today.setHours(0,0,0,0);
+    // let loginID = 5;
+    apiFunctions.getAllPromises(loginID).then(data => {
+        hotel = new Hotel(data[0].rooms);
+        hotel.updateBookings(data[1].bookings);
+        user = new Customer(data[2]);
+    })
+    .then(logData)
+    .then(clearLogin);
+}
+
+function clearLogin() {
+    // Global vars???
+    document.getElementById('usernameInput').value = '';
+    document.getElementById('passwordInput').value = '';
+    displayUserReservations();
+    toggleHidden(loginPage);
 }
 
 function displayUserReservations() {
