@@ -102,6 +102,27 @@ aside {
   width: 40vw;
 }
 
+/* LOGIN PAGE */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  position: fixed;
+  background-color: white;
+}
+
+.login-box {
+  height: 60vh;
+  width: 60vw;
+  background-color: cornflowerblue;
+  text-align: center;
+}
+
 /* ALL UTILTY CLASSES */
 .hidden {
   display: none;

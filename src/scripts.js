@@ -28,7 +28,7 @@ myReservationsButton.addEventListener('click', displayUserReservations);
 filteredRooms.addEventListener('click', generateModal);
 modalBg.addEventListener('click', collapseModal);
 
-getData();
+// getData();
 
 function getData() {
     today = new Date();
