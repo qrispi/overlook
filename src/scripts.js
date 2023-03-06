@@ -103,8 +103,8 @@ function displayUserReservations() {
         if(user.myBookings.futureBookings.length > 0) {
             user.myBookings.futureBookings.forEach(booking => {
                 futureSection.innerHTML += `
-                <article class="future-booking">
-                    <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image">
+                <article class="future-booking" style="background-color:${booking.color}">
+                    <img src=${booking.image} alt="picture of booked room" class="booking-image">
                     <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
                     <h5>Reserved on ${booking.date}</h5>
                 </article>`;
@@ -146,8 +146,8 @@ function displayAvailableRooms(rooms) {
     filteredRooms.innerHTML = '';
     rooms.forEach(room => {
         filteredRooms.innerHTML += `
-        <article class="future-booking" data-room="${room.number}">
-            <img src="./images/hotel-room.png" alt="picture of booked room" class="booking-image" data-room="${room.number}">
+        <article class="future-booking" data-room="${room.number}" style="background-color:${room.color}">
+            <img src=${room.image}  alt="picture of booked room" class="booking-image" data-room="${room.number}">
             <h5 style="text-transform: capitalize" data-room="${room.number}"><i>${room.roomType}</i></h5>
             <h5 data-room="${room.number}">Total Price $${room.costPerNight.toFixed(2)}</h5>
         </article>`;
