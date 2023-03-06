@@ -24,7 +24,8 @@ class Room {
         if(this.roomType === 'suite') {
             this.image = images[2];
             this.color = colors[2];
-        } else {
+        } 
+        if(this.roomType === 'residential suite') {
             this.image = images[3];
             this.color = colors[3];
         }

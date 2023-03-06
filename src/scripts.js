@@ -75,6 +75,7 @@ function getData(loginID) {
     apiFunctions.getAllPromises(loginID).then(data => {
         hotel = new Hotel(data[0].rooms);
         hotel.updateBookings(data[1].bookings);
+        hotel.assignRoomStyles();
         user = new Customer(data[2]);
     })
     .then(logData)
