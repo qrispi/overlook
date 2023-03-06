@@ -15,32 +15,68 @@ const searchRoomsButton = document.getElementById('searchRoomsButton');
 const filterButton = document.getElementById('filterButton');
 const clearFiltersButton = document.getElementById('clearButton');
 const myReservationsButton = document.getElementById('myReservationsNav');
+const loginButton = document.getElementById('loginButton');
+const logoutButton = document.getElementById('logOutNav');
 
 const userReservations = document.getElementById('myReservations');
 const availableRooms = document.getElementById('availableRooms');
 const filteredRooms = document.getElementById('filteredRooms');
 const modalBg = document.getElementById('modalBg');
+const loginPage = document.getElementById('loginPage');
+const loginForm = document.getElementById('loginForm');
 
 searchRoomsButton.addEventListener('click', checkForRooms);
 filterButton.addEventListener('click', filterRooms);
 clearFiltersButton.addEventListener('click', clearRoomOptions);
 myReservationsButton.addEventListener('click', displayUserReservations);
+loginButton.addEventListener('click', validateLogin);
+loginForm.addEventListener('keyup', () => {if(event.key === 'Enter') validateLogin()});
+logoutButton.addEventListener('click', () => location.reload());
 filteredRooms.addEventListener('click', generateModal);
 modalBg.addEventListener('click', collapseModal);
 
-getData();
+function validateLogin() {
+    event.preventDefault();
+    const username = document.getElementById('usernameInput').value;
+    const password = document.getElementById('passwordInput').value;
+    const errorMsg = document.getElementById('errorMessage');
+    if(!username && !password) errorMsg.innerText = "Please enter your username and password!";
+    if(username && !password) errorMsg.innerText = "Please enter your password!";
+    if(!username && password) errorMsg.innerText = "Please enter your username!";
+    if(username && password) {
+        if(!username.includes('customer')) {
+            errorMsg.innerText = "No user found with that name!";
+        } else if(password !== 'overlook2021') {
+            errorMsg.innerText = "Incorrect password! Please try again.";
+        } else {
+            const userID = parseInt(username.split('customer')[1]);
+            if(userID < 1 || userID > 50 || !userID) {
+                errorMsg.innerText = "No user found with that name!";
+            } else {
+                errorMsg.innerText = "Welcome! Please wait while we gather your data...";
+                getData(userID);
+            }
+        }
+    }
+}
 
-function getData() {
+function getData(loginID) {
     today = new Date();
     today.setHours(0,0,0,0);
-    let loginID = 5;
     apiFunctions.getAllPromises(loginID).then(data => {
         hotel = new Hotel(data[0].rooms);
         hotel.updateBookings(data[1].bookings);
         user = new Customer(data[2]);
     })
     .then(logData)
-    .then(displayUserReservations);
+    .then(clearLogin);
+}
+
+function clearLogin() {
+    document.getElementById('usernameInput').value = '';
+    document.getElementById('passwordInput').value = '';
+    displayUserReservations();
+    toggleHidden(loginPage);
 }
 
 function displayUserReservations() {
