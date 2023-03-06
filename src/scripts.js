@@ -22,12 +22,14 @@ const availableRooms = document.getElementById('availableRooms');
 const filteredRooms = document.getElementById('filteredRooms');
 const modalBg = document.getElementById('modalBg');
 const loginPage = document.getElementById('loginPage');
+const loginForm = document.getElementById('loginForm');
 
 searchRoomsButton.addEventListener('click', checkForRooms);
 filterButton.addEventListener('click', filterRooms);
 clearFiltersButton.addEventListener('click', clearRoomOptions);
 myReservationsButton.addEventListener('click', displayUserReservations);
 loginButton.addEventListener('click', validateLogin);
+loginForm.addEventListener('keyup', () => {if(event.key === 'Enter') validateLogin()});
 filteredRooms.addEventListener('click', generateModal);
 modalBg.addEventListener('click', collapseModal);
 
