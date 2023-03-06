@@ -8,7 +8,7 @@ nav {
   justify-content: space-around;
   align-items: center;
   list-style: none;
-  background-color: grey;
+  background-color: #ade8f4;
   font-size: 2rem;
   height: 6vh;
 }
@@ -32,7 +32,6 @@ nav {
   text-align: right;
   width: 32vw;
   margin: 3vw;
-  background-color: aquamarine;
 }
 
 .user-past-bookings {
@@ -43,7 +42,7 @@ nav {
 .past-booking {
   text-align: center;
   margin: 2vw;
-  background-color: bisque;
+  background-color: #ade8f4;
   padding: 2vh 3vw;
 }
 
@@ -60,7 +59,7 @@ aside {
   width: 9vw;
   height: 50vh;
   position: fixed;
-  background-color: antiquewhite;
+  background-color: #ade8f4;
 }
 
 .filtered-rooms {
@@ -91,7 +90,6 @@ aside {
   height: 80vh;
   width: 60vw;
   overflow: auto;
-  background-color: aquamarine;
 }
 
 .modal-image {
@@ -113,7 +111,6 @@ aside {
   width: 100%;
   z-index: 10;
   position: fixed;
-  background-color: white;
 }
 
 .login-box {

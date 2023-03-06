@@ -7,6 +7,7 @@ import './images/single-room.png';
 import './images/suite.png';
 import './images/junior-suite.png';
 import './images/residential-suite.png';
+import './images/hotel-deck.png';
 
 let user;
 let hotel;
@@ -194,7 +195,7 @@ function generateModal(event) {
         if(thisRoom.bidet) bidetMsg = "For Butts who like Water 🚿";
         modalBg.innerHTML = '';
         modalBg.innerHTML += `
-        <article class="clicked-room">
+        <article class="clicked-room" style="background-color:${thisRoom.color}">
             <img src="./images/hotel-room.png" alt="picture of booked room" class="modal-image">
             <h5 style="text-transform: capitalize"><i>${thisRoom.roomType}</i></h5>
             <h5 style="text-transform: capitalize">${bedsMsg}</h5>
@@ -228,7 +229,7 @@ function bookRoom(roomNumber, thisRoom) {
 function confirmationModal(thisRoom) {
     modalBg.innerHTML = '';
     modalBg.innerHTML += `
-        <article class="clicked-room">
+        <article class="clicked-room" style="background-color:${thisRoom.color}">
             <img src="./images/confetti.gif" alt="picture of exploding confetti" class="confetti-image">
             <h5>Success!</h5>
             <h5>You have booked the <i style="text-transform: capitalize">${thisRoom.roomType}</i> on ${selectedDate}!</h5>
