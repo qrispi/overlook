@@ -37,15 +37,9 @@ function validateLogin() {
     const username = document.getElementById('usernameInput').value;
     const password = document.getElementById('passwordInput').value;
     const errorMsg = document.getElementById('errorMessage');
-    if(!username && !password) {
-        errorMsg.innerText = "Please enter your username and password!";
-    }
-    if(username && !password) {
-        errorMsg.innerText = "Please enter your password!";
-    }
-    if(!username && password) {
-        errorMsg.innerText = "Please enter your username!";
-    }
+    if(!username && !password) errorMsg.innerText = "Please enter your username and password!";
+    if(username && !password) errorMsg.innerText = "Please enter your password!";
+    if(!username && password) errorMsg.innerText = "Please enter your username!";
     if(username && password) {
         if(!username.includes('customer')) {
             errorMsg.innerText = "No user found with that name!";
@@ -53,13 +47,11 @@ function validateLogin() {
             errorMsg.innerText = "Incorrect password! Please try again.";
         } else {
             const userID = parseInt(username.split('customer')[1]);
-            if(userID < 1 || userID > 50) {
+            if(userID < 1 || userID > 50 || !userID) {
                 errorMsg.innerText = "No user found with that name!";
             } else {
                 errorMsg.innerText = "Welcome! Please wait while we gather your data...";
                 getData(userID);
-                console.log("ID: ", userID)
-                console.log("Password: ", password)
             }
         }
     }
