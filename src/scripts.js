@@ -2,10 +2,12 @@ import './css/styles.css';
 import apiFunctions from './api-calls';
 import Hotel from './classes/Hotel';
 import Customer from './classes/Customer';
+import Manager from './classes/Manager';
 import './images/confetti.gif';
 import './images/hotel-room.png';
 
 let user;
+let manager;
 let hotel;
 let today;
 let selectedDate;
@@ -38,6 +40,8 @@ function getData() {
         hotel = new Hotel(data[0].rooms);
         hotel.updateBookings(data[1].bookings);
         user = new Customer(data[2]);
+        manager = new Manager(data[3].customers);
+        console.log(manager)
     })
     .then(logData)
     .then(displayUserReservations);
