@@ -33,7 +33,7 @@ getData();
 function getData() {
     today = new Date();
     today.setHours(0,0,0,0);
-    let loginID = 5;
+    let loginID = 34;
     apiFunctions.getAllPromises(loginID).then(data => {
         hotel = new Hotel(data[0].rooms);
         hotel.updateBookings(data[1].bookings);
@@ -77,7 +77,8 @@ function displayUserReservations() {
             pastSection.innerHTML = "<h4>Looks like you haven't stayed with us before! Change that by using the book button!</h4>";
         }
         document.getElementById('userName').innerText = user.name;
-        document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent();
+        user.calculateMoneySpent();
+        document.getElementById('userAmountSpent').innerText = user.myMoneySpent;
     }
 }
 
