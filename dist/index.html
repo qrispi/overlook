@@ -24,14 +24,16 @@
         <h1>One Night</h1>
         <h2><i>Maybe you don't have much time, maybe we're just boring... But you can only book for one night.</i></h2>
         <h3>Please Login to make or view a reservation!</h3>
-        <label for="usernameInput">Username:
-          <input type="text" id="usernameInput" required>
-        </label>
-        <label for="passwordInput">Password:
-          <input type="password" id="passwordInput" required>
-        </label>
-        <button id="loginButton">Login</button>
-        <h3 id="errorMessage"></h3>
+        <form id="loginForm">
+          <label for="usernameInput">Username:
+            <input type="text" id="usernameInput" required>
+          </label>
+          <label for="passwordInput">Password:
+            <input type="password" id="passwordInput" required>
+          </label>
+          <button id="loginButton">Login</button>
+          <h3 id="errorMessage"></h3>
+        </form>
       </article>
     </section>
     <section class="modal-bg hidden" id="modalBg">

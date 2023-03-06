@@ -31,9 +31,8 @@ loginButton.addEventListener('click', validateLogin);
 filteredRooms.addEventListener('click', generateModal);
 modalBg.addEventListener('click', collapseModal);
 
-// getData();
-
 function validateLogin() {
+    event.preventDefault();
     const username = document.getElementById('usernameInput').value;
     const password = document.getElementById('passwordInput').value;
     const errorMsg = document.getElementById('errorMessage');
@@ -60,7 +59,6 @@ function validateLogin() {
 function getData(loginID) {
     today = new Date();
     today.setHours(0,0,0,0);
-    // let loginID = 5;
     apiFunctions.getAllPromises(loginID).then(data => {
         hotel = new Hotel(data[0].rooms);
         hotel.updateBookings(data[1].bookings);
@@ -71,7 +69,6 @@ function getData(loginID) {
 }
 
 function clearLogin() {
-    // Global vars???
     document.getElementById('usernameInput').value = '';
     document.getElementById('passwordInput').value = '';
     displayUserReservations();
