@@ -196,7 +196,7 @@ function generateModal(event) {
         modalBg.innerHTML = '';
         modalBg.innerHTML += `
         <article class="clicked-room" style="background-color:${thisRoom.color}">
-            <img src="./images/hotel-room.png" alt="picture of booked room" class="modal-image">
+            <img src=${thisRoom.image} alt="picture of selected room" class="modal-image">
             <h5 style="text-transform: capitalize"><i>${thisRoom.roomType}</i></h5>
             <h5 style="text-transform: capitalize">${bedsMsg}</h5>
             <h5>${bidetMsg}</h5>
