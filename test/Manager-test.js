@@ -34,4 +34,52 @@ describe('Manager', () => {
         expect(manager.customers[0]).to.be.a.instanceOf(Customer);
         expect(manager.customers[0]).to.deep.equal(customer1);
     });
+
+    it('should be able to update Customer data', () => {
+        expect(manager.updateCustomers).to.be.a('function');
+    });
+
+    it('should update customers to store only their bookings and sort by past or future', () => {
+        manager.updateCustomers(hotel.bookings, today);
+
+        expect(manager.customers[0].myBookings).to.be.a('object');
+        expect(manager.customers[0].myBookings.pastBookings.length).to.equal(1);
+        expect(manager.customers[0].myBookings.futureBookings.length).to.equal(1);
+
+        expect(manager.customers[1].myBookings).to.be.a('object');
+        expect(manager.customers[1].myBookings.pastBookings.length).to.equal(0);
+        expect(manager.customers[1].myBookings.futureBookings.length).to.equal(0);
+    });
+
+    it('should update customers to store their total amount spent', () => {
+        manager.updateCustomers(hotel.bookings, today);
+
+        expect(manager.customers[0].myMoneySpent).to.be.a('number');
+        expect(manager.customers[0].myMoneySpent).to.equal(699);
+
+        expect(manager.customers[1].myMoneySpent).to.be.a('number');
+        expect(manager.customers[1].myMoneySpent).to.equal(0);
+    });
+
+    it('should be able to find and return a customer by name', () => {
+        const search1 = manager.searchCustomers('Leatha Ullrich');
+        const search2 = manager.searchCustomers('Rocio Schuster');
+
+        expect(search1).to.deep.equal(customer1);
+        expect(search2).to.deep.equal(customer2);
+    });
+
+    it('should not be capitalization dependent for customer search', () => {
+        const search1 = manager.searchCustomers('leATha ullriCH');
+        const search2 = manager.searchCustomers('rocio SCHUSTER');
+
+        expect(search1).to.deep.equal(customer1);
+        expect(search2).to.deep.equal(customer2);
+    });
+
+    it('should return undefined if a customer is not found', () => {
+        const search1 = manager.searchCustomers('potatoe');
+    
+        expect(search1).to.equal(undefined);
+    });
 });
