@@ -3,7 +3,10 @@ import apiFunctions from './api-calls';
 import Hotel from './classes/Hotel';
 import Customer from './classes/Customer';
 import './images/confetti.gif';
-import './images/hotel-room.png';
+import './images/single-room.png';
+import './images/suite.png';
+import './images/junior-suite.png';
+import './images/residential-suite.png';
 
 let user;
 let hotel;
