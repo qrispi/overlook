@@ -16,6 +16,7 @@ const filterButton = document.getElementById('filterButton');
 const clearFiltersButton = document.getElementById('clearButton');
 const myReservationsButton = document.getElementById('myReservationsNav');
 const loginButton = document.getElementById('loginButton');
+const logoutButton = document.getElementById('logOutNav');
 
 const userReservations = document.getElementById('myReservations');
 const availableRooms = document.getElementById('availableRooms');
