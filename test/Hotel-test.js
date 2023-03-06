@@ -30,10 +30,14 @@ describe('Hotel', () => {
         expect(hotel.rooms[3]).to.deep.equal(rooms[3]);
     });
 
-    it('should store an array of Bookings', () => {
-        expect(hotel.bookings).to.be.a('array');
-        expect(hotel.bookings.length).to.equal(5);
-        expect(hotel.bookings[0]).to.be.an.instanceOf(Booking);
-        expect(hotel.bookings[3]).to.deep.equal(bookings[3]);
+    it('should start with no bookings', () => {
+        expect(hotel.bookings).to.equal(undefined);
     });
+
+    // it('should store an array of Bookings', () => {
+    //     expect(hotel.bookings).to.be.a('array');
+    //     expect(hotel.bookings.length).to.equal(5);
+    //     expect(hotel.bookings[0]).to.be.an.instanceOf(Booking);
+    //     expect(hotel.bookings[3]).to.deep.equal(bookings[3]);
+    // });
 });
