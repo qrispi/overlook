@@ -24,7 +24,6 @@ const filteredRooms = document.getElementById('filteredRooms');
 const modalBg = document.getElementById('modalBg');
 const loginPage = document.getElementById('loginPage');
 const loginForm = document.getElementById('loginForm');
-const errorMsg = document.getElementById('errorMessage');
 
 searchRoomsButton.addEventListener('click', checkForRooms);
 filterButton.addEventListener('click', filterRooms);
@@ -32,7 +31,7 @@ clearFiltersButton.addEventListener('click', clearRoomOptions);
 myReservationsButton.addEventListener('click', displayUserReservations);
 loginButton.addEventListener('click', validateLogin);
 loginForm.addEventListener('keyup', () => {if(event.key === 'Enter') validateLogin()});
-logoutButton.addEventListener('click', changeUser);
+logoutButton.addEventListener('click', () => location.reload());
 filteredRooms.addEventListener('click', generateModal);
 modalBg.addEventListener('click', collapseModal);
 
@@ -40,6 +39,7 @@ function validateLogin() {
     event.preventDefault();
     const username = document.getElementById('usernameInput').value;
     const password = document.getElementById('passwordInput').value;
+    const errorMsg = document.getElementById('errorMessage');
     if(!username && !password) errorMsg.innerText = "Please enter your username and password!";
     if(username && !password) errorMsg.innerText = "Please enter your password!";
     if(!username && password) errorMsg.innerText = "Please enter your username!";
@@ -76,10 +76,6 @@ function clearLogin() {
     document.getElementById('usernameInput').value = '';
     document.getElementById('passwordInput').value = '';
     displayUserReservations();
-    toggleHidden(loginPage);
-}
-
-function changeUser() {
     toggleHidden(loginPage);
 }
 
