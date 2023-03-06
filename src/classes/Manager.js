@@ -11,6 +11,10 @@ class Manager {
             customer.calculateMoneySpent();
         }); 
     }
+
+    searchCustomers(name) {
+        return this.customers.find(customer => name.toLowerCase() === customer.name.toLowerCase());
+    }
 }
 
 export default Manager;
