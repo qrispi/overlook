@@ -34,10 +34,29 @@ describe('Hotel', () => {
         expect(hotel.bookings).to.equal(undefined);
     });
 
-    // it('should store an array of Bookings', () => {
-    //     expect(hotel.bookings).to.be.a('array');
-    //     expect(hotel.bookings.length).to.equal(5);
-    //     expect(hotel.bookings[0]).to.be.an.instanceOf(Booking);
-    //     expect(hotel.bookings[3]).to.deep.equal(bookings[3]);
-    // });
+    it('should update and store an array of Bookings', () => {
+        hotel.updateBookings(bookings);
+        expect(hotel.bookings).to.be.a('array');
+        expect(hotel.bookings.length).to.equal(5);
+        expect(hotel.bookings[0]).to.be.an.instanceOf(Booking);
+    });
+
+    it('should be able to find rooms available by date', () => {
+        hotel.updateBookings(bookings);
+        hotel.checkDate('2022/02/05');
+        expect(hotel.available.length).to.equal(1);
+        expect(hotel.available[0]).to.deep.equal(room);
+    });
+
+    it('should be able to filter available rooms by attribute', () => {
+        hotel.updateBookings(bookings);
+        hotel.checkDate('2022/02/05');
+        const bidet = true;
+        const bedSize = 'queen';
+        const roomType = 'residential suite';
+        const numBeds = 1;
+        const tags = [bidet, bedSize, roomType, numBeds];
+        const available = hotel.filterAvailable(tags);
+        expect(available[0]).to.deep.equal(room);
+    });
 });
