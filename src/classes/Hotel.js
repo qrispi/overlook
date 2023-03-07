@@ -8,6 +8,10 @@ class Hotel {
         this.available;
     }
 
+    assignRoomStyles() {
+        this.rooms.forEach(room => room.assignStyles());
+    }
+
     updateBookings(bookingData) {
         this.bookings = bookingData.map(booking => new Booking(booking));
         this.bookings.forEach(booking => booking.populateRoomInfo(this.rooms));
