@@ -1,8 +1,13 @@
 # Overlook
 [//]: <>
-This is a hotel booking site where a user can login in with their unique username and see a dashboard of their reservations (sorted between past and future) and their total amount spent. The user can also search for available rooms to book by date and then filter those results by one or more room attributes. Site navigation is enhanced with a custom modal that generates on click for available rooms and turns into a congratulations message once a successful reservation is made. All data is fetched through a local server and classes are fully tested with Mocha and Chai. Careful consideration was also given to accessibility - 000000000000000000000
+This is a hotel booking site where a user can login in with their unique username and see a dashboard of their reservations (sorted between past and future) and their total amount spent. The user can also search for available rooms to book by date and then filter those results by one or more room attributes. Site navigation is enhanced with a custom modal that generates on click for available rooms and turns into a congratulations message once a successful reservation is made. All data is fetched through a local server and classes are fully tested with Mocha and Chai. Careful consideration was also given to accessibility - WAVE evaluation tool shows 0 errors and lighthouse scores the page (without login) at 100. All elements are also fully tab-able with functioning enter key. A manager class was also created to view the days bookings, total revenue and search for customers by name. Manager can then delete future bookings for the searched customer.
 
 ---
+
+## Preview of Site:
+
+![ezgif com-optimize](https://user-images.githubusercontent.com/24902544/223523923-5c097508-230e-4e84-9110-0cb46d57a166.gif)
+
 
 ## Installation Instructions:
 [//]: <>
@@ -48,6 +53,6 @@ This was a solo project we were given one week to complete. Total time spent on 
   - Error handling with login page
 - Challenges:
   - Utilizing the required attribute in form inputs in combination with event.preventDefault() to stop a page reload. This was solved by putting event.preventDefault() inside a conditional that first checks for valid input.
-  - Keeping up with the deadline/knowing where to focus my time
+  - Deciding which features and aspects were must-have and which could wait
   - Learning how to semantically write HTML to be accessible
   - Timing of fetch requests and DOM changes
