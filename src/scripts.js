@@ -98,7 +98,6 @@ function getData(loginID) {
         manager = new Manager(data[3].customers);
         manager.updateCustomers(hotel.bookings, today);
     })
-    .then(logData)
     .then(clearLogin);
 }
 
@@ -270,13 +269,10 @@ function displayManagerBookings() {
     document.getElementById('userName').innerText = 'Manager';
     const displayDate = `${month}/${day}/${year}`;
     const searchDate = `${year}/${month}/${day}`;
-    // const searchDate = "2022/02/04"
     manager.checkToday(hotel.bookings, searchDate);
     manager.checkTodaysRevenue();
     const managerBookings = manager.todaysBookings;
     const todaysRevenue = manager.todaysRevenue;
-    console.log(managerBookings)
-    console.log(todaysRevenue)
     const todaysBookings = document.getElementById('todaysBookings');
     document.getElementById('managerDate').innerText = displayDate;
     document.getElementById('managerRevenue').innerText = todaysRevenue;
@@ -302,10 +298,10 @@ function displayCustomerInfo() {
     const customer = manager.searchCustomers(name);
     if(customer) {
         customerInfo.innerHTML += `
-        <h4>${customer.name}</h4>
-        <h4>Lifetime Spend: $${customer.myMoneySpent}</h4>`
+        <h4>${customer.name}</h4>;
+        <h4>Lifetime Spend: $${customer.myMoneySpent}</h4>`;
         if(customer.myBookings.futureBookings.length > 0) {
-            customerInfo.innerHTML += `<h4>Future Bookings:</h4>`
+            customerInfo.innerHTML += `<h4>Future Bookings:</h4>`;
             customer.myBookings.futureBookings.forEach(booking => {
                 customerInfo.innerHTML += `
                 <article class="past-booking">
@@ -319,7 +315,7 @@ function displayCustomerInfo() {
             customerInfo.addEventListener('click', deleteBooking);
         }
         if(customer.myBookings.pastBookings.length > 0) {
-            customerInfo.innerHTML += `<h4>Past Bookings:</h4>`
+            customerInfo.innerHTML += `<h4>Past Bookings:</h4>`;
             customer.myBookings.pastBookings.forEach(booking => {
                 customerInfo.innerHTML += `
                 <article class="past-booking">
@@ -331,30 +327,22 @@ function displayCustomerInfo() {
             });
         }
     } else {
-        customerInfo.innerHTML = `<h4>We don't have any customers with that name in our database.</h4>`
+        customerInfo.innerHTML = `<h4>We don't have any customers with that name in our database.</h4>`;
     }
 }
 
 function deleteBooking(event) {
-    const id = event.target.dataset.booking
-    const deletePath = `bookings/${id}`
-    console.log(deletePath);
+    const id = event.target.dataset.booking;
+    const deletePath = `bookings/${id}`;
     apiFunctions.fetchData(deletePath, 'DELETE');
     apiFunctions.fetchData('bookings', 'GET').then(data => {
         hotel.updateBookings(data.bookings);
         manager.updateCustomers(hotel.bookings, today);
         displayManagerBookings;
-        customerInfo.innerHTML = `<h4>Booking successfully deleted!</h4>`
+        customerInfo.innerHTML = `<h4>Booking successfully deleted!</h4>`;
     });
 }
 
 function toggleHidden(element) {
     element.classList.toggle('hidden');
-}
-
-// PURELY FOR TESTING
-function logData() {
-    console.log('Today: ', today);
-    console.log("hotel: ", hotel);
-    console.log("user: ", user);
 }
