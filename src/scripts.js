@@ -2,10 +2,12 @@ import './css/styles.css';
 import apiFunctions from './api-calls';
 import Hotel from './classes/Hotel';
 import Customer from './classes/Customer';
+import Manager from './classes/Manager';
 import './images/confetti.gif';
 import './images/hotel-room.png';
 
 let user;
+let manager;
 let hotel;
 let today;
 let selectedDate;
@@ -67,8 +69,11 @@ function getData(loginID) {
         hotel = new Hotel(data[0].rooms);
         hotel.updateBookings(data[1].bookings);
         user = new Customer(data[2]);
+        manager = new Manager(data[3].customers);
+        manager.updateCustomers(hotel.bookings, today);
     })
     .then(logData)
+    .then(displayUserReservations)
     .then(clearLogin);
 }
 
@@ -113,7 +118,8 @@ function displayUserReservations() {
             pastSection.innerHTML = "<h4>Looks like you haven't stayed with us before! Change that by using the book button!</h4>";
         }
         document.getElementById('userName').innerText = user.name;
-        document.getElementById('userAmountSpent').innerText = user.calculateMoneySpent();
+        user.calculateMoneySpent();
+        document.getElementById('userAmountSpent').innerText = user.myMoneySpent;
     }
 }
 
