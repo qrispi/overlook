@@ -8,15 +8,14 @@
 </head>
 <body>
   <nav>
-    <li>LOGO ???</li>
+    <div>Welcome, <span id="userName"></span></div>
     <form id="dateForm">
       <label for="dateInput">Choose a night:</label>
       <input type="date" name="book-reservation" min="2023-03-03" max="2025-03-03" id="dateInput" required/>
       <input type="submit" id="searchRoomsButton" value="Search Rooms"></input>
     </form>
-    <!-- <li>Welcome, #USER</li> -->
-    <li id="myReservationsNav">My Reservations</li>
-    <li id="logOutNav">Log Out</li>
+    <button id="myReservationsNav">My Reservations</button>
+    <button id="logOutNav">Log Out</button>
   </nav>
   <main>
     <section class="login-page" id="loginPage" style="background-image: url(./images/hotel-deck.png)">
@@ -42,7 +41,6 @@
     <header class="welcome-header">
       <h1>One Night</h1>
       <h2><i>Maybe you don't have much time, maybe we're just boring... But you can only book for one night.</i></h2>
-      <h3>Welcome, <span id="userName"></span></h3>
     </header>
     <section class="my-reservations hidden" id="myReservations">
       <h4>Your Upcoming Reservations</h4>

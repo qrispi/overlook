@@ -256,6 +256,7 @@ function confirmationModal(thisRoom) {
 }
 
 function displayManagerBookings() {
+    document.getElementById('userName').innerText = 'Manager';
     const day = today.getDate();
     const month = today.getMonth() + 1;
     const year = today.getFullYear();
