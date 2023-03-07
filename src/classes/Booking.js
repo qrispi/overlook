@@ -9,6 +9,8 @@ class Booking {
         this.bedSize;
         this.numBeds;
         this.costPerNight;
+        this.image;
+        this.color;
     }
 
     populateRoomInfo(rooms) {
@@ -19,6 +21,8 @@ class Booking {
                 this.bedSize = room.bedSize;
                 this.numBeds = room.numBeds;
                 this.costPerNight = room.costPerNight;
+                this.image = room.image;
+                this.color = room.color;
             }
         });
     }

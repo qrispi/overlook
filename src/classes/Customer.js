@@ -3,6 +3,7 @@ class Customer {
         this.id = customerData.id;
         this.name = customerData.name;
         this.myBookings;
+        this.myMoneySpent;
     }
 
     sortMyBookings(bookings, today) {
@@ -20,7 +21,7 @@ class Customer {
             this.myBookings[key].forEach(booking => total += booking.costPerNight);
             return total;
         }, 0);
-        return Math.round(moneySpent);
+        this.myMoneySpent = Math.round(moneySpent);
     }
 }
 
