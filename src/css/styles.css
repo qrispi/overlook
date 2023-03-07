@@ -3,14 +3,22 @@ body {
   padding: 0;
 }
 
+h4 {
+  font-size: 2rem;
+}
+
+main {
+  padding: 0 1vw 5vh 1vw;
+}
+
 nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
   list-style: none;
   background-color: #ade8f4;
-  font-size: 2rem;
-  height: 6vh;
+  font-size: 1.5rem;
+  height: 8vh;
 }
 
 .welcome-header {
@@ -53,18 +61,27 @@ nav {
   display: flex;
 }
 
+.available-room:hover {
+  scale: 1.1;
+}
+
 aside {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   padding: 2vw;
-  margin: 1vw;
+  margin: 3vh 1vw;
   width: 9vw;
   height: 50vh;
   top: 30vh;
   position: fixed;
   border-radius: 3px;
   background-color: #ade8f4;
+}
+
+aside > h5 {
+  font-size: 1.3rem;
+  margin: 1vh 0;
 }
 
 .filtered-rooms {
@@ -96,14 +113,24 @@ aside {
   height: 80vh;
   width: 60vw;
   overflow: auto;
+  padding: 5vh 2vw;
+}
+
+.success-modal {
+  z-index: 3;
+  height: 70vh;
+  width: 30vw;
+  overflow: auto;
+  padding: 5vh 2vw;
 }
 
 .modal-image {
   width: 60vw;
+  height: 60vh;
 }
 
 .confetti-image {
-  width: 40vw;
+  width: 30vw;
 }
 
 /* LOGIN PAGE */
@@ -128,9 +155,27 @@ aside {
   border-radius: 3px;
   background-color: rgba(2 62 138 / 80%);
   text-align: center;
+  padding: 3vh 3vw;
+  font-size: 1.5rem;
+}
+
+.login-box > h1 {
+  font-size: 3rem;
 }
 
 /* ALL UTILTY CLASSES */
 .hidden {
   display: none;
+}
+
+button {
+  background-color: #caf0f8;
+  font-size: 1rem;
+  padding: 0.5vh 1vw;
+  border-radius: 3px;
+}
+
+button:hover {
+  color: white;
+  background-color: #03045e;
 }

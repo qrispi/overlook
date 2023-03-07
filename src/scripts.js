@@ -14,6 +14,9 @@ let user;
 let manager;
 let hotel;
 let today;
+let day
+let month;
+let year;
 let selectedDate;
 let userView;
 let isManager;
@@ -25,7 +28,7 @@ const myReservationsButton = document.getElementById('myReservationsNav');
 const customerSearchButton = document.getElementById('searchCustomersButton');
 const loginButton = document.getElementById('loginButton');
 const logoutButton = document.getElementById('logOutNav');
-
+const dateInput = document.getElementById('dateInput');
 const userReservations = document.getElementById('myReservations');
 const availableRooms = document.getElementById('availableRooms');
 const filteredRooms = document.getElementById('filteredRooms');
@@ -80,6 +83,13 @@ function validateLogin() {
 function getData(loginID) {
     today = new Date();
     today.setHours(0,0,0,0);
+    day = today.getDate();
+    month = today.getMonth() + 1;
+    year = today.getFullYear();
+    if(day < 10) day = `0${day}`;
+    if(month < 10) month = `0${month}`;
+    const min = `${year}-${month}-${day}`;
+    dateInput.setAttribute("min", min);
     apiFunctions.getAllPromises(loginID).then(data => {
         hotel = new Hotel(data[0].rooms);
         hotel.assignRoomStyles();
@@ -98,6 +108,8 @@ function clearLogin() {
     if(isManager) {
         toggleHidden(managerView);
         toggleHidden(availableRooms);
+        toggleHidden(myReservationsButton);
+        toggleHidden(document.getElementById('dateForm'));
         displayManagerBookings();
     } else {
         displayUserReservations();
@@ -145,7 +157,6 @@ function displayUserReservations() {
 }
 
 function checkForRooms(event) {
-    const dateInput = document.getElementById('dateInput');
     if(dateInput.checkValidity()) {
         event.preventDefault();
         const date = dateInput.value;
@@ -164,7 +175,7 @@ function displayAvailableRooms(rooms) {
     filteredRooms.innerHTML = '';
     rooms.forEach(room => {
         filteredRooms.innerHTML += `
-        <article class="future-booking" data-room="${room.number}" style="background-color:${room.color}">
+        <article class="future-booking available-room" data-room="${room.number}" style="background-color:${room.color}">
             <img src=${room.image}  alt="picture of booked room" class="booking-image" data-room="${room.number}">
             <h5 style="text-transform: capitalize" data-room="${room.number}"><i>${room.roomType}</i></h5>
             <h5 data-room="${room.number}">Total Price $${room.costPerNight.toFixed(2)}</h5>
@@ -246,7 +257,7 @@ function bookRoom(roomNumber, thisRoom) {
 function confirmationModal(thisRoom) {
     modalBg.innerHTML = '';
     modalBg.innerHTML += `
-        <article class="clicked-room" style="background-color:${thisRoom.color}">
+        <article class="success-modal" style="background-color:${thisRoom.color}">
             <img src="./images/confetti.gif" alt="picture of exploding confetti" class="confetti-image">
             <h5>Success!</h5>
             <h5>You have booked the <i style="text-transform: capitalize">${thisRoom.roomType}</i> on ${selectedDate}!</h5>
@@ -257,9 +268,6 @@ function confirmationModal(thisRoom) {
 
 function displayManagerBookings() {
     document.getElementById('userName').innerText = 'Manager';
-    const day = today.getDate();
-    const month = today.getMonth() + 1;
-    const year = today.getFullYear();
     const displayDate = `${month}/${day}/${year}`;
     const searchDate = `${year}/${month}/${day}`;
     // const searchDate = "2022/02/04"

@@ -11,8 +11,8 @@
     <div>Welcome, <span id="userName"></span></div>
     <form id="dateForm">
       <label for="dateInput">Choose a night:</label>
-      <input type="date" name="book-reservation" min="2023-03-03" max="2025-03-03" id="dateInput" required/>
-      <input type="submit" id="searchRoomsButton" value="Search Rooms"></input>
+      <input type="date" style="width: 8vw" name="book-reservation" min="2023-03-03" max="2025-03-03" id="dateInput" required/>
+      <button id="searchRoomsButton">Search Rooms</button>
     </form>
     <button id="myReservationsNav">My Reservations</button>
     <button id="logOutNav">Log Out</button>
@@ -55,7 +55,7 @@
     </section>
     <section class="available-rooms" id="availableRooms">
       <aside class="search-rooms">
-        <h4>Narrow Down Your Search!</h4>
+        <h5>Narrow Down Your Search!</h5>
         <label for="bedNum">Number of Beds:</label>
         <select id="bedNum">
           <option id="filterPlaceholder" value="" disabled selected>Choose..</option>
@@ -94,14 +94,18 @@
     <section class="manager-view hidden" id="managerView">
       <h4>Today's Revenue: $<span id="managerRevenue"></span></h4>
       <h4>Reservations for <span id="managerDate"></span>:</h4>
-      <section class="todays-bookings" id="todaysBookings"></section>
-      <form id="customerSearch">
+      <section class="todays-bookings" id="todaysBookings">
+        <!-- All of today's bookings will populate here -->
+      </section>
+      <form id="customerSearch" style="font-size: 1.5rem;">
         <label for="searchNames">Search for a customer:
           <input type="text" id="searchName" placeholder="type full name" required>
         </label>
         <button id="searchCustomersButton">Retrieve Customer</button>
       </form>
-      <section id="managerCustomerView"></section>
+      <section id="managerCustomerView">
+        <!-- Searched Customer's reservations will populate here -->
+      </section>
     </section>
   </main>
   <script src="bundle.js"></script>
