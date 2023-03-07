@@ -41,7 +41,7 @@ function getData() {
         hotel.updateBookings(data[1].bookings);
         user = new Customer(data[2]);
         manager = new Manager(data[3].customers);
-        console.log(manager)
+        manager.updateCustomers(hotel.bookings, today);
     })
     .then(logData)
     .then(displayUserReservations);
