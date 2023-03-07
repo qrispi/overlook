@@ -23,7 +23,7 @@ class Manager {
     }
 
     checkTodaysRevenue() {
-        this.todaysRevenue = this.todaysBookings.reduce((total, booking) => total += booking.costPerNight, 0);
+        this.todaysRevenue = Math.round(this.todaysBookings.reduce((total, booking) => total += booking.costPerNight, 0));
     }
 }
 

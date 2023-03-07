@@ -203,10 +203,15 @@ function displayManagerBookings() {
     const displayDate = `${month}/${day}/${year}`;
     // const searchDate = `${year}/${month}/${day}`;
     const searchDate = "2022/02/04"
-    const managerBookings = manager.checkToday(hotel.bookings, searchDate);
+    manager.checkToday(hotel.bookings, searchDate);
+    manager.checkTodaysRevenue();
+    const managerBookings = manager.todaysBookings;
+    const todaysRevenue = manager.todaysRevenue;
     console.log(managerBookings)
+    console.log(todaysRevenue)
     const todaysBookings = document.getElementById('todaysBookings');
     document.getElementById('managerDate').innerText = displayDate;
+    document.getElementById('managerRevenue').innerText = todaysRevenue;
     todaysBookings.innerHTML = ''
     if(managerBookings.length > 0) {
         managerBookings.forEach(booking => {
