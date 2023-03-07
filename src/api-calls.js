@@ -16,7 +16,7 @@ function fetchData(path, method, body) {
 
 function getAllPromises(customerID) {
     const customerPath = 'customers/' + customerID;
-    return Promise.all([fetchData('rooms', 'GET'), fetchData('bookings', 'GET'), fetchData(customerPath, 'GET')]);
+    return Promise.all([fetchData('rooms', 'GET'), fetchData('bookings', 'GET'), fetchData(customerPath, 'GET'), fetchData('customers', 'GET')]);
 }
 
 export default {getAllPromises, fetchData};

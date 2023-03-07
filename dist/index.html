@@ -93,6 +93,18 @@
         <!-- Rooms that can be booked will go here once user selects a date -->
       </section>
     </section>
+    <section class="manager-view hidden" id="managerView">
+      <h4>Today's Revenue: $<span id="managerRevenue"></span></h4>
+      <h4>Reservations for <span id="managerDate"></span>:</h4>
+      <section class="todays-bookings" id="todaysBookings"></section>
+      <form id="customerSearch">
+        <label for="searchNames">Search for a customer:
+          <input type="text" id="searchName" placeholder="type full name" required>
+        </label>
+        <button id="searchCustomersButton">Retrieve Customer</button>
+      </form>
+      <section id="managerCustomerView"></section>
+    </section>
   </main>
   <script src="bundle.js"></script>
 </body>
