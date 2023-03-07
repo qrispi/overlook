@@ -12,33 +12,70 @@ let hotel;
 let today;
 let selectedDate;
 let userView;
+let isManager;
 
 const searchRoomsButton = document.getElementById('searchRoomsButton');
 const filterButton = document.getElementById('filterButton');
 const clearFiltersButton = document.getElementById('clearButton');
 const myReservationsButton = document.getElementById('myReservationsNav');
 const customerSearchButton = document.getElementById('searchCustomersButton');
+const loginButton = document.getElementById('loginButton');
+const logoutButton = document.getElementById('logOutNav');
 
 const userReservations = document.getElementById('myReservations');
 const availableRooms = document.getElementById('availableRooms');
 const filteredRooms = document.getElementById('filteredRooms');
 const modalBg = document.getElementById('modalBg');
-const customerView = document.getElementById('managerCustomerView');
+const customerInfo = document.getElementById('managerCustomerView');
+const managerView = document.getElementById('managerView');
+const loginPage = document.getElementById('loginPage');
+const loginForm = document.getElementById('loginForm');
 
 searchRoomsButton.addEventListener('click', checkForRooms);
 filterButton.addEventListener('click', filterRooms);
 clearFiltersButton.addEventListener('click', clearRoomOptions);
 myReservationsButton.addEventListener('click', displayUserReservations);
+loginButton.addEventListener('click', validateLogin);
+loginForm.addEventListener('keyup', () => {if(event.key === 'Enter') validateLogin()});
+logoutButton.addEventListener('click', () => location.reload());
 filteredRooms.addEventListener('click', generateModal);
 modalBg.addEventListener('click', collapseModal);
 customerSearchButton.addEventListener('click', displayCustomerInfo);
 
-getData();
+function validateLogin() {
+    event.preventDefault();
+    const username = document.getElementById('usernameInput').value;
+    const password = document.getElementById('passwordInput').value;
+    const errorMsg = document.getElementById('errorMessage');
+    if(!username && !password) errorMsg.innerText = "Please enter your username and password!";
+    if(username && !password) errorMsg.innerText = "Please enter your password!";
+    if(!username && password) errorMsg.innerText = "Please enter your username!";
+    if(username && password) {
+        if(!username.includes('customer') && username !== 'manager') {
+            errorMsg.innerText = "No user found with that name!";
+        } else if(password !== 'overlook2021') {
+            errorMsg.innerText = "Incorrect password! Please try again.";
+        } else {
+            if(username === 'manager') {
+                errorMsg.innerText = "Welcome! Please wait while we gather your data...";
+                isManager = true;
+                getData(1);
+            } else {
+                const userID = parseInt(username.split('customer')[1]);
+                if(userID < 1 || userID > 50 || !userID) {
+                    errorMsg.innerText = "No user found with that name!";
+                } else {
+                    errorMsg.innerText = "Welcome! Please wait while we gather your data...";
+                    getData(userID);
+                }
+            }
+        }
+    }
+}
 
-function getData() {
+function getData(loginID) {
     today = new Date();
     today.setHours(0,0,0,0);
-    let loginID = 34;
     apiFunctions.getAllPromises(loginID).then(data => {
         hotel = new Hotel(data[0].rooms);
         hotel.updateBookings(data[1].bookings);
@@ -47,8 +84,20 @@ function getData() {
         manager.updateCustomers(hotel.bookings, today);
     })
     .then(logData)
-    .then(displayManagerBookings)
-    // .then(displayUserReservations);
+    .then(clearLogin);
+}
+
+function clearLogin() {
+    document.getElementById('usernameInput').value = '';
+    document.getElementById('passwordInput').value = '';
+    if(isManager) {
+        toggleHidden(managerView);
+        toggleHidden(availableRooms);
+        displayManagerBookings();
+    } else {
+        displayUserReservations();
+    }
+    toggleHidden(loginPage);
 }
 
 function displayUserReservations() {
@@ -204,8 +253,8 @@ function displayManagerBookings() {
     const month = today.getMonth() + 1;
     const year = today.getFullYear();
     const displayDate = `${month}/${day}/${year}`;
-    // const searchDate = `${year}/${month}/${day}`;
-    const searchDate = "2022/02/04"
+    const searchDate = `${year}/${month}/${day}`;
+    // const searchDate = "2022/02/04"
     manager.checkToday(hotel.bookings, searchDate);
     manager.checkTodaysRevenue();
     const managerBookings = manager.todaysBookings;
@@ -233,16 +282,16 @@ function displayManagerBookings() {
 function displayCustomerInfo() {
     event.preventDefault();
     const name = document.getElementById('searchName').value;
-    customerView.innerHTML = '';
+    customerInfo.innerHTML = '';
     const customer = manager.searchCustomers(name);
     if(customer) {
-        customerView.innerHTML += `
+        customerInfo.innerHTML += `
         <h4>${customer.name}</h4>
         <h4>Lifetime Spend: $${customer.myMoneySpent}</h4>`
         if(customer.myBookings.futureBookings.length > 0) {
-            customerView.innerHTML += `<h4>Future Bookings:</h4>`
+            customerInfo.innerHTML += `<h4>Future Bookings:</h4>`
             customer.myBookings.futureBookings.forEach(booking => {
-                customerView.innerHTML += `
+                customerInfo.innerHTML += `
                 <article class="past-booking">
                     <h5>Room Number: ${booking.roomNumber}</h5>
                     <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
@@ -251,12 +300,12 @@ function displayCustomerInfo() {
                     <button class="cancelButton" data-booking="${booking.id}">Cancel Booking</button>
                 </article>`;
             });
-            customerView.addEventListener('click', deleteBooking);
+            customerInfo.addEventListener('click', deleteBooking);
         }
         if(customer.myBookings.pastBookings.length > 0) {
-            customerView.innerHTML += `<h4>Past Bookings:</h4>`
+            customerInfo.innerHTML += `<h4>Past Bookings:</h4>`
             customer.myBookings.pastBookings.forEach(booking => {
-                customerView.innerHTML += `
+                customerInfo.innerHTML += `
                 <article class="past-booking">
                     <h5>Room Number: ${booking.roomNumber}</h5>
                     <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
@@ -266,7 +315,7 @@ function displayCustomerInfo() {
             });
         }
     } else {
-        customerView.innerHTML = `<h4>We don't have any customers with that name in our database.</h4>`
+        customerInfo.innerHTML = `<h4>We don't have any customers with that name in our database.</h4>`
     }
 }
 
@@ -279,7 +328,7 @@ function deleteBooking(event) {
         hotel.updateBookings(data.bookings);
         manager.updateCustomers(hotel.bookings, today);
         displayManagerBookings;
-        customerView.innerHTML = `<h4>Booking successfully deleted!</h4>`
+        customerInfo.innerHTML = `<h4>Booking successfully deleted!</h4>`
     });
 }
 

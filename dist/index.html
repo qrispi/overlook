@@ -16,9 +16,26 @@
     </label>
     <!-- <li>Welcome, #USER</li> -->
     <li id="myReservationsNav">My Reservations</li>
-    <li>LogOut ???</li>
+    <li id="logOutNav">Log Out</li>
   </nav>
   <main>
+    <section class="login-page" id="loginPage">
+      <article class="login-box" id="loginBox">
+        <h1>One Night</h1>
+        <h2><i>Maybe you don't have much time, maybe we're just boring... But you can only book for one night.</i></h2>
+        <h3>Please Login to make or view a reservation!</h3>
+        <form id="loginForm">
+          <label for="usernameInput">Username:
+            <input type="text" id="usernameInput" required>
+          </label>
+          <label for="passwordInput">Password:
+            <input type="password" id="passwordInput" required>
+          </label>
+          <button id="loginButton">Login</button>
+          <h3 id="errorMessage"></h3>
+        </form>
+      </article>
+    </section>
     <section class="modal-bg hidden" id="modalBg">
       <!-- Clicked Room will populate here -->
     </section>
@@ -38,7 +55,7 @@
       </section>
       <h4>Total Spent $<span id="userAmountSpent"></span></h4>
     </section>
-    <section class="available-rooms hidden" id="availableRooms">
+    <section class="available-rooms" id="availableRooms">
       <aside class="search-rooms">
         <h4>Narrow Down Your Search!</h4>
         <label for="bedNum">Number of Beds:</label>
@@ -76,7 +93,7 @@
         <!-- Rooms that can be booked will go here once user selects a date -->
       </section>
     </section>
-    <section class="manager-view" id="managerView">
+    <section class="manager-view hidden" id="managerView">
       <h4>Today's Revenue: $<span id="managerRevenue"></span></h4>
       <h4>Reservations for <span id="managerDate"></span>:</h4>
       <section class="todays-bookings" id="todaysBookings"></section>
