@@ -6,7 +6,7 @@ This is a hotel booking site where a user can login in with their unique usernam
 
 ## Installation Instructions:
 [//]: <>
-1. Fork and clone [this repo](https://github.com/jfogiato/whats-cookin) and [this repo (backend API)](https://github.com/turingschool-examples/whats-cookin-api).
+1. Fork and clone [this repo](https://github.com/qrispi/overlook) and [this repo (backend API)](https://github.com/turingschool-examples/overlook-api).
 1. Copy the SSH key from the green "Code" button within each repo.
 1. In your terminal, use the command `git clone git@github.com:[the link to each repo]`.
 1. Run `npm install` in both local repositories.
