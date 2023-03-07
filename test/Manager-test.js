@@ -78,8 +78,26 @@ describe('Manager', () => {
     });
 
     it('should return undefined if a customer is not found', () => {
-        const search1 = manager.searchCustomers('potatoe');
+        const search1 = manager.searchCustomers('potato');
     
         expect(search1).to.equal(undefined);
     });
+
+    it('should be able to find all rooms booked for a date', () => {
+        manager.checkToday(hotel.bookings, '2022/02/05');
+        expect(manager.todaysBookings.length).to.equal(4);
+
+        manager.checkToday(hotel.bookings, today);
+        expect(manager.todaysBookings.length).to.equal(0);
+    });
+
+    it('should be able to calculate and store all of the days revenue', () => {
+        manager.checkToday(hotel.bookings, '2022/02/05');
+        manager.checkTodaysRevenue();
+        expect(manager.todaysRevenue).to.equal(1738);
+
+        manager.checkToday(hotel.bookings, today);
+        manager.checkTodaysRevenue();
+        expect(manager.todaysRevenue).to.equal(0);
+    })
 });
