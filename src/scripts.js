@@ -44,7 +44,7 @@ function getData() {
         manager.updateCustomers(hotel.bookings, today);
     })
     .then(logData)
-    .then(displayUserReservations);
+    // .then(displayUserReservations);
 }
 
 function displayUserReservations() {
