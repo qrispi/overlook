@@ -19,67 +19,26 @@ let month;
 let year;
 let selectedDate;
 let userView;
-let isManager;
 
 const searchRoomsButton = document.getElementById('searchRoomsButton');
 const filterButton = document.getElementById('filterButton');
 const clearFiltersButton = document.getElementById('clearButton');
 const myReservationsButton = document.getElementById('myReservationsNav');
-const customerSearchButton = document.getElementById('searchCustomersButton');
-// const loginButton = document.getElementById('loginButton');
 const logoutButton = document.getElementById('logOutNav');
 const dateInput = document.getElementById('dateInput');
 const userReservations = document.getElementById('myReservations');
 const availableRooms = document.getElementById('availableRooms');
 const filteredRooms = document.getElementById('filteredRooms');
 const modalBg = document.getElementById('modalBg');
-const customerInfo = document.getElementById('managerCustomerView');
-// const managerView = document.getElementById('managerView');
-// const loginPage = document.getElementById('loginPage');
-// const loginForm = document.getElementById('loginForm');
 
 searchRoomsButton.addEventListener('click', checkForRooms);
 filterButton.addEventListener('click', filterRooms);
 clearFiltersButton.addEventListener('click', clearRoomOptions);
 myReservationsButton.addEventListener('click', displayUserReservations);
-// loginButton.addEventListener('click', validateLogin);
-// loginForm.addEventListener('keyup', () => {if(event.key === 'Enter') validateLogin()});
 logoutButton.addEventListener('click', () => location.reload());
 filteredRooms.addEventListener('click', generateModal);
 filteredRooms.addEventListener('keyup', (event) => {if(event.key === 'Enter') generateModal(event)});
 modalBg.addEventListener('click', collapseModal);
-customerSearchButton.addEventListener('click', displayCustomerInfo);
-
-// function validateLogin() {
-//     event.preventDefault();
-//     const username = document.getElementById('usernameInput').value;
-//     const password = document.getElementById('passwordInput').value;
-//     const errorMsg = document.getElementById('errorMessage');
-//     if(!username && !password) errorMsg.innerText = "Please enter your username and password!";
-//     if(username && !password) errorMsg.innerText = "Please enter your password!";
-//     if(!username && password) errorMsg.innerText = "Please enter your username!";
-//     if(username && password) {
-//         if(!username.includes('customer') && username !== 'manager') {
-//             errorMsg.innerText = "No user found with that name!";
-//         } else if(password !== 'overlook2021') {
-//             errorMsg.innerText = "Incorrect password! Please try again.";
-//         } else {
-//             if(username === 'manager') {
-//                 errorMsg.innerText = "Welcome! Please wait while we gather your data...";
-//                 isManager = true;
-//                 getData(1);
-//             } else {
-//                 const userID = parseInt(username.split('customer')[1]);
-//                 if(userID < 1 || userID > 50 || !userID) {
-//                     errorMsg.innerText = "No user found with that name!";
-//                 } else {
-//                     errorMsg.innerText = "Welcome! Please wait while we gather your data...";
-//                     getData(userID);
-//                 }
-//             }
-//         }
-//     }
-// }
 
 getData(34);
 
@@ -103,21 +62,6 @@ function getData(loginID) {
     })
     .then(displayUserReservations);
 }
-
-// function clearLogin() {
-//     document.getElementById('usernameInput').value = '';
-//     document.getElementById('passwordInput').value = '';
-//     if(isManager) {
-//         toggleHidden(managerView);
-//         toggleHidden(availableRooms);
-//         toggleHidden(myReservationsButton);
-//         toggleHidden(document.getElementById('dateForm'));
-//         displayManagerBookings();
-//     } else {
-//         displayUserReservations();
-//     }
-//     toggleHidden(loginPage);
-// }
 
 function displayUserReservations() {
     if(!userView) {
