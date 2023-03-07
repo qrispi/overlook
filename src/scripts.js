@@ -246,7 +246,8 @@ function displayCustomerInfo() {
                 <article class="past-booking">
                     <h5>Room Number: ${booking.roomNumber}</h5>
                     <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
-                    <h5>Booked by ${manager.customers[booking.userID - 1].name}</h5>
+                    <h5>Booked for ${booking.date}</h5>
+                    <h5>Booking Amount: $${booking.costPerNight}</h5>
                     <button class="cancelButton" data-booking="${booking.id}">Cancel Booking</button>
                 </article>`;
             });
@@ -259,7 +260,8 @@ function displayCustomerInfo() {
                 <article class="past-booking">
                     <h5>Room Number: ${booking.roomNumber}</h5>
                     <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
-                    <h5>Booked on ${manager.customers[booking.userID - 1].name}</h5>
+                    <h5>Stayed on ${booking.date}</h5>
+                    <h5>Booking Amount: $${booking.costPerNight}</h5>
                 </article>`;
             });
         }
@@ -268,8 +270,8 @@ function displayCustomerInfo() {
     }
 }
 
-function deleteBooking() {
-
+function deleteBooking(event) {
+    console.log(event.target.dataset.booking)
 }
 
 function toggleHidden(element) {
