@@ -232,18 +232,44 @@ function displayManagerBookings() {
 function displayCustomerInfo() {
     event.preventDefault();
     const name = document.getElementById('searchName').value;
-    console.log(name)
     const customerView = document.getElementById('managerCustomerView');
     customerView.innerHTML = '';
     const customer = manager.searchCustomers(name);
     if(customer) {
-        customerView.innerHTML = `
+        customerView.innerHTML += `
         <h4>${customer.name}</h4>
-        <h4>${customer.myMoneySpent}</h4>
-        `
+        <h4>Lifetime Spend: $${customer.myMoneySpent}</h4>`
+        if(customer.myBookings.futureBookings.length > 0) {
+            customerView.innerHTML += `<h4>Future Bookings:</h4>`
+            customer.myBookings.futureBookings.forEach(booking => {
+                customerView.innerHTML += `
+                <article class="past-booking">
+                    <h5>Room Number: ${booking.roomNumber}</h5>
+                    <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
+                    <h5>Booked by ${manager.customers[booking.userID - 1].name}</h5>
+                    <button class="cancelButton" data-booking="${booking.id}">Cancel Booking</button>
+                </article>`;
+            });
+            customerView.addEventListener('click', deleteBooking);
+        }
+        if(customer.myBookings.pastBookings.length > 0) {
+            customerView.innerHTML += `<h4>Past Bookings:</h4>`
+            customer.myBookings.pastBookings.forEach(booking => {
+                customerView.innerHTML += `
+                <article class="past-booking">
+                    <h5>Room Number: ${booking.roomNumber}</h5>
+                    <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
+                    <h5>Booked on ${manager.customers[booking.userID - 1].name}</h5>
+                </article>`;
+            });
+        }
     } else {
         customerView.innerHTML = `<h4>We don't have any customers with that name in our database.</h4>`
     }
+}
+
+function deleteBooking() {
+
 }
 
 function toggleHidden(element) {
