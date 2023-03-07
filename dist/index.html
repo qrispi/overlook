@@ -9,11 +9,11 @@
 <body>
   <nav>
     <li>LOGO ???</li>
-    <label>
-      Choose a night:
-      <input type="date" name="book-reservation" min="2023-03-03" max="2025-03-03" id="dateInput"/>
-      <button id="searchRoomsButton">Search Rooms</button>
-    </label>
+    <form id="dateForm">
+      <label for="dateInput">Choose a night:</label>
+      <input type="date" name="book-reservation" min="2023-03-03" max="2025-03-03" id="dateInput" required/>
+      <input type="submit" id="searchRoomsButton" value="Search Rooms"></input>
+    </form>
     <!-- <li>Welcome, #USER</li> -->
     <li id="myReservationsNav">My Reservations</li>
     <li id="logOutNav">Log Out</li>

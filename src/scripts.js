@@ -144,17 +144,19 @@ function displayUserReservations() {
     }
 }
 
-function checkForRooms() {
-    const date = document.getElementById('dateInput').value;
-    if(date) {
+function checkForRooms(event) {
+    const dateInput = document.getElementById('dateInput');
+    if(dateInput.checkValidity()) {
+        event.preventDefault();
+        const date = dateInput.value;
         if(userView) {
             userView = false;
             toggleHidden(availableRooms);
             toggleHidden(userReservations);
         }
         selectedDate = date.replaceAll('-', '/');
-        const rooms = hotel.checkDate(selectedDate);
-        displayAvailableRooms(rooms);
+        hotel.checkDate(selectedDate);
+        displayAvailableRooms(hotel.available);
     }
 }
 
@@ -189,7 +191,6 @@ function filterRooms() {
 }
 
 function clearRoomOptions() {
-    // Refactor these to be global since function above uses too?
     document.getElementById('bedNum').value = '';
     document.getElementById('bedSize').value = '';
     document.getElementById('roomType').value = '';
@@ -236,7 +237,8 @@ function bookRoom(roomNumber, thisRoom) {
     apiFunctions.fetchData('bookings', 'POST', body);
     apiFunctions.fetchData('bookings', 'GET').then(data => {
         hotel.updateBookings(data.bookings);
-        checkForRooms();
+        hotel.checkDate(selectedDate);
+        displayAvailableRooms(hotel.available);
         confirmationModal(thisRoom);
     });
 }
