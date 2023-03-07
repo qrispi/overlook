@@ -17,6 +17,7 @@ const searchRoomsButton = document.getElementById('searchRoomsButton');
 const filterButton = document.getElementById('filterButton');
 const clearFiltersButton = document.getElementById('clearButton');
 const myReservationsButton = document.getElementById('myReservationsNav');
+const customerSearchButton = document.getElementById('searchCustomersButton');
 
 const userReservations = document.getElementById('myReservations');
 const availableRooms = document.getElementById('availableRooms');
@@ -29,6 +30,7 @@ clearFiltersButton.addEventListener('click', clearRoomOptions);
 myReservationsButton.addEventListener('click', displayUserReservations);
 filteredRooms.addEventListener('click', generateModal);
 modalBg.addEventListener('click', collapseModal);
+customerSearchButton.addEventListener('click', displayCustomerInfo);
 
 getData();
 
@@ -224,6 +226,23 @@ function displayManagerBookings() {
         });
     } else {
         todaysBookings.innerHTML = "<h4>Looks like you should make some calls! No bookings for today...</h4>";
+    }
+}
+
+function displayCustomerInfo() {
+    event.preventDefault();
+    const name = document.getElementById('searchName').value;
+    console.log(name)
+    const customerView = document.getElementById('managerCustomerView');
+    customerView.innerHTML = '';
+    const customer = manager.searchCustomers(name);
+    if(customer) {
+        customerView.innerHTML = `
+        <h4>${customer.name}</h4>
+        <h4>${customer.myMoneySpent}</h4>
+        `
+    } else {
+        customerView.innerHTML = `<h4>We don't have any customers with that name in our database.</h4>`
     }
 }
 
