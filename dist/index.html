@@ -55,7 +55,7 @@
       </section>
       <h4>Total Spent $<span id="userAmountSpent"></span></h4>
     </section>
-    <section class="available-rooms hidden" id="availableRooms">
+    <section class="available-rooms" id="availableRooms">
       <aside class="search-rooms">
         <h4>Narrow Down Your Search!</h4>
         <label for="bedNum">Number of Beds:</label>
@@ -93,8 +93,9 @@
         <!-- Rooms that can be booked will go here once user selects a date -->
       </section>
     </section>
-    <section class="manager-view" id="managerView">
-      <h4>Reservations for <span id="managerDate">****date***</span>:</h4>
+    <section class="manager-view hidden" id="managerView">
+      <h4>Today's Revenue: $<span id="managerRevenue"></span></h4>
+      <h4>Reservations for <span id="managerDate"></span>:</h4>
       <section class="todays-bookings" id="todaysBookings"></section>
       <form id="customerSearch">
         <label for="searchNames">Search for a customer:
