@@ -23,6 +23,7 @@ const userReservations = document.getElementById('myReservations');
 const availableRooms = document.getElementById('availableRooms');
 const filteredRooms = document.getElementById('filteredRooms');
 const modalBg = document.getElementById('modalBg');
+const customerView = document.getElementById('managerCustomerView');
 
 searchRoomsButton.addEventListener('click', checkForRooms);
 filterButton.addEventListener('click', filterRooms);
@@ -232,7 +233,6 @@ function displayManagerBookings() {
 function displayCustomerInfo() {
     event.preventDefault();
     const name = document.getElementById('searchName').value;
-    const customerView = document.getElementById('managerCustomerView');
     customerView.innerHTML = '';
     const customer = manager.searchCustomers(name);
     if(customer) {
@@ -271,7 +271,16 @@ function displayCustomerInfo() {
 }
 
 function deleteBooking(event) {
-    console.log(event.target.dataset.booking)
+    const id = event.target.dataset.booking
+    const deletePath = `bookings/${id}`
+    console.log(deletePath);
+    apiFunctions.fetchData(deletePath, 'DELETE');
+    apiFunctions.fetchData('bookings', 'GET').then(data => {
+        hotel.updateBookings(data.bookings);
+        manager.updateCustomers(hotel.bookings, today);
+        displayManagerBookings;
+        customerView.innerHTML = `<h4>Booking successfully deleted!</h4>`
+    });
 }
 
 function toggleHidden(element) {
