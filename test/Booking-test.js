@@ -38,7 +38,7 @@ describe('Booking', () => {
 
     it('should store the date it is booked for', () => {
         expect(booking1.date).to.equal('2023/04/22');
-        expect(booking2.date).to.equal('2022/01/24');
+        expect(booking2.date).to.equal('2022/02/05');
 
         expect(booking1.date).to.equal(bookingData[0].date);
         expect(booking2.date).to.equal(bookingData[1].date);
