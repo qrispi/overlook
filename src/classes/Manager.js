@@ -15,6 +15,10 @@ class Manager {
     searchCustomers(name) {
         return this.customers.find(customer => name.toLowerCase() === customer.name.toLowerCase());
     }
+
+    checkToday(bookings, date) {
+        return bookings.filter(booking => booking.date === date);
+    }
 }
 
 export default Manager;

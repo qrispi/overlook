@@ -44,6 +44,7 @@ function getData() {
         manager.updateCustomers(hotel.bookings, today);
     })
     .then(logData)
+    .then(displayManagerBookings)
     // .then(displayUserReservations);
 }
 
@@ -193,6 +194,32 @@ function confirmationModal(thisRoom) {
             <h5>We are so excited to have you for the whole night!</h5>
         </article>`;
     setTimeout(collapseModal, 3000, null, true);
+}
+
+function displayManagerBookings() {
+    const day = today.getDate();
+    const month = today.getMonth() + 1;
+    const year = today.getFullYear();
+    const displayDate = `${month}/${day}/${year}`;
+    const searchDate = `${year}/${month}/${day}`;
+    // const searchDate = "2022/09/11"
+    const managerBookings = manager.checkToday(hotel.bookings, searchDate);
+    console.log(managerBookings)
+    const todaysBookings = document.getElementById('todaysBookings');
+    document.getElementById('managerDate').innerText = displayDate;
+    todaysBookings.innerHTML = ''
+    if(managerBookings.length > 0) {
+        managerBookings.forEach(booking => {
+            todaysBookings.innerHTML += `
+            <article class="past-booking">
+                <h5>Room Number: ${booking.roomNumber}</h5>
+                <h5 style="text-transform: capitalize"><i>${booking.roomType}</i></h5>
+                <h5>Booked by ${manager.customers[booking.userID - 1].name}</h5>
+            </article>`;
+        });
+    } else {
+        todaysBookings.innerHTML = "<h4>Looks like you should make some calls! No bookings for today...</h4>";
+    }
 }
 
 function toggleHidden(element) {
