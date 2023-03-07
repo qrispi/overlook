@@ -201,8 +201,8 @@ function displayManagerBookings() {
     const month = today.getMonth() + 1;
     const year = today.getFullYear();
     const displayDate = `${month}/${day}/${year}`;
-    const searchDate = `${year}/${month}/${day}`;
-    // const searchDate = "2022/09/11"
+    // const searchDate = `${year}/${month}/${day}`;
+    const searchDate = "2022/02/04"
     const managerBookings = manager.checkToday(hotel.bookings, searchDate);
     console.log(managerBookings)
     const todaysBookings = document.getElementById('todaysBookings');

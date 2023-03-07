@@ -3,6 +3,8 @@ import Customer from "./Customer";
 class Manager {
     constructor(customersData) {
         this.customers = customersData.map(customer => new Customer(customer));
+        this.todaysBookings;
+        this.todaysRevenue;
     }
 
     updateCustomers(bookings, today) {
@@ -17,7 +19,11 @@ class Manager {
     }
 
     checkToday(bookings, date) {
-        return bookings.filter(booking => booking.date === date);
+        this.todaysBookings = bookings.filter(booking => booking.date === date);
+    }
+
+    checkTodaysRevenue() {
+        this.todaysRevenue = this.todaysBookings.reduce((total, booking) => total += booking.costPerNight, 0);
     }
 }
 
